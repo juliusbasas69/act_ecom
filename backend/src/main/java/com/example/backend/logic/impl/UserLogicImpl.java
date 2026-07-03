@@ -1,5 +1,12 @@
 package com.example.backend.logic.impl;
 
+import java.util.List;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
 import org.springframework.stereotype.Service;
@@ -11,16 +18,14 @@ import com.example.backend.logic.UserLogic;
 @Service
 public class UserLogicImpl implements UserLogic{
 
-    private final UserDao userDao;
+    @Value("${user.max.display}")
+    private String USER_MAX_DISPLAY;
 
-    private final CacheManager cacheManager;
+    @Autowired
+    private UserDao userDao;
 
-    public UserLogicImpl(UserDao userDao,
-        CacheManager cacheManager
-    ) {
-        this.userDao = userDao;
-        this.cacheManager = cacheManager;
-    }
+    @Autowired
+    private CacheManager cacheManager;
 
     @Override
     public void saveUser(UserEntity user) {
@@ -40,7 +45,7 @@ public class UserLogicImpl implements UserLogic{
             }
         }
 
-        System.out.println("🔥 DB CALLED");
+        System.out.println("DB CALLED");
 
         UserEntity user = userDao.findUserByEmail(email);
 
@@ -49,6 +54,14 @@ public class UserLogicImpl implements UserLogic{
         }
 
         return user;
+    }
+
+    @Override
+    public Page<UserEntity> getAllUsers(int page) {
+
+        Pageable pageable = PageRequest.of(page, Integer.parseInt(USER_MAX_DISPLAY));
+        
+        return userDao.getAllUsers(pageable);
     }
     
 }
