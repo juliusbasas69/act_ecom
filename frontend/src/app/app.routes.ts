@@ -18,7 +18,6 @@ export const routes: Routes = [
             (m) => m.UserDashboard,
           );
         },
-        canActivate: [userGuard],
       },
     ],
   },
@@ -33,6 +32,12 @@ export const routes: Routes = [
           return import('./features/dashboards/admin-dashboard/admin-dashboard').then(
             (m) => m.AdminDashboard,
           );
+        },
+      },
+      {
+        path: 'users',
+        loadComponent: () => {
+          return import('./features/users/pages/user-list/user-list').then((m) => m.UserList);
         },
       },
     ],
