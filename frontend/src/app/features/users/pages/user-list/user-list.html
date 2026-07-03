@@ -58,11 +58,13 @@
                 <div
                   class="flex h-11 w-11 items-center justify-center rounded-full bg-sky-100 font-semibold text-sky-700"
                 >
-                  J
+                  {{ user.firstName.charAt(0).toUpperCase() }}
                 </div>
 
                 <div>
-                  <p class="font-medium text-slate-800">Juan Dela Cruz</p>
+                  <p class="font-medium text-slate-800">
+                    {{ user.firstName }} {{ user.familyName }}
+                  </p>
                   <p class="text-sm text-slate-500">juan@email.com</p>
                 </div>
               </div>
@@ -109,5 +111,8 @@
         }
       </tbody>
     </table>
+    @if (pagination(); as page) {
+      <app-pagination [pagination]="page" (pageChange)="loadUsers($event)" [label]="'users'" />
+    }
   </div>
 </div>

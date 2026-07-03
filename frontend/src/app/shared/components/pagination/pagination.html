@@ -1,0 +1,56 @@
+<div class="flex items-center justify-between border-t border-slate-100 px-6 py-4">
+  <!-- Left -->
+  <div class="text-sm text-slate-600">
+    <span class="font-semibold">{{ pagination.totalElements }}</span>
+    {{ label }}
+
+    <span class="mx-2 text-slate-300">|</span>
+
+    Page
+    <span class="font-semibold">{{ pagination.page + 1 }}</span>
+    of
+    <span class="font-semibold">{{ pagination.totalPages }}</span>
+  </div>
+
+  <!-- Right -->
+  <div class="flex items-center gap-3">
+    <!-- Jump to -->
+    <div class="flex items-center gap-2">
+      <label class="text-sm text-slate-600">Jump to</label>
+
+      <input
+        #pageInput
+        type="number"
+        min="1"
+        [max]="pagination.totalPages"
+        class="w-16 rounded-lg border border-slate-200 px-2 py-2 text-center text-sm outline-none focus:border-sky-500 focus:ring-2 focus:ring-sky-100"
+        (keyup.enter)="jumpToPage(pageInput.value)"
+      />
+    </div>
+
+    <!-- Previous -->
+    <button
+      class="flex h-10 w-10 items-center justify-center rounded-lg border border-slate-200 transition hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-50"
+      [disabled]="!pagination.hasPrevious"
+      (click)="previousPage()"
+    >
+      <i class="fa-solid fa-chevron-left"></i>
+    </button>
+
+    <!-- Current Page -->
+    <span
+      class="flex h-10 min-w-10 items-center justify-center rounded-lg bg-sky-600 px-3 text-sm font-semibold text-white"
+    >
+      {{ pagination.page + 1 }}
+    </span>
+
+    <!-- Next -->
+    <button
+      class="flex h-10 w-10 items-center justify-center rounded-lg border border-slate-200 transition hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-50"
+      [disabled]="!pagination.hasNext"
+      (click)="nextPage()"
+    >
+      <i class="fa-solid fa-chevron-right"></i>
+    </button>
+  </div>
+</div>
