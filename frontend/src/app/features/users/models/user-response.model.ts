@@ -1,8 +1,7 @@
-export interface User {
+export interface UserResponse {
   encryptedId: string;
   firstName: string;
   familyName: string;
   email: string;
-  createdAt: string;
   role: string;
 }

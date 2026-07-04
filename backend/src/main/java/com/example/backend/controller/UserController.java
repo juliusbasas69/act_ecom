@@ -9,12 +9,14 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,7 +25,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.backend.common.constants.MessageConstant;
-import com.example.backend.dto.request.UserCreateRequest;
+import com.example.backend.dto.request.UserRequest;
 import com.example.backend.dto.response.ErrorResponse;
 import com.example.backend.dto.response.PageResponse;
 import com.example.backend.dto.response.SuccessResponse;
@@ -67,7 +69,10 @@ public class UserController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<?> createUser(@Valid @RequestBody UserCreateRequest request, BindingResult bindingResult){
+    public ResponseEntity<?> createUser(
+        @Valid @RequestBody UserRequest request, 
+        BindingResult bindingResult
+    ){
 
         if (bindingResult.hasErrors()) {
 
@@ -96,6 +101,64 @@ public class UserController {
                 .body(new SuccessResponse(USER_CREATED_MESSAGE));
             
         } catch(Exception e){
+            e.printStackTrace();
+            return ResponseEntity
+                .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(new ErrorResponse(UNEXPECTED_ERROR_MESSAGE));
+        }
+    }
+
+    @GetMapping("/edit/{encryptedId}")
+    public ResponseEntity<?> showEditUser(@PathVariable("encryptedId") String encryptedId){
+
+        try{
+
+            UserResponse response = userService.findUserById(encryptedId);
+
+            return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(response);
+
+        }catch(Exception e){
+            e.printStackTrace();
+            return ResponseEntity
+                .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(new ErrorResponse(UNEXPECTED_ERROR_MESSAGE));
+        }
+    }
+
+    @PostMapping("/edit/{encryptedId}")
+    public ResponseEntity<?> editUser(
+        @PathVariable("encryptedId") String encryptedId,
+        @Valid @RequestBody UserRequest request,
+        BindingResult bindingResult
+    ){
+
+        if (bindingResult.hasErrors()) {
+
+            Map<String, List<String>> errors = new HashMap<>();
+
+            for (FieldError error : bindingResult.getFieldErrors()) {
+                errors.computeIfAbsent(error.getField(), key -> new ArrayList<>())
+                    .add(error.getDefaultMessage());
+            }
+            
+            //This is to check password and confirm password temporarily
+            if (!request.password().equals(request.confirmPassword())) {
+                errors.computeIfAbsent("password", key -> new ArrayList<>())
+                    .add(MessageConstant.PASSWORDS_DO_NOT_MATCH);
+            }
+
+            return ResponseEntity.badRequest().body(errors);
+        }
+
+        try{
+
+            return ResponseEntity
+                .status(HttpStatus.OK)
+                .body("AS");
+
+        }catch(Exception e){
             e.printStackTrace();
             return ResponseEntity
                 .status(HttpStatus.INTERNAL_SERVER_ERROR)

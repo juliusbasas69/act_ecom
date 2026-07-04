@@ -72,7 +72,7 @@
         </tr>
       </thead>
       <tbody class="divide-y divide-slate-100">
-        @for (user of _users(); track user.userId) {
+        @for (user of _users(); track user.encryptedId) {
           <tr class="hover:bg-sky-50 transition">
             <td class="px-6 py-4">
               <div class="flex items-center gap-4">
@@ -113,7 +113,7 @@
               <div class="flex justify-center gap-2">
                 <!-- View -->
                 <button
-                  class="rounded-lg bg-sky-50 p-2 text-sky-600 transition hover:bg-sky-100"
+                  class="rounded-lg bg-sky-50 p-2 text-sky-600 transition hover:bg-sky-100 cursor-pointer"
                   title="View"
                 >
                   <i class="fa-solid fa-eye"></i>
@@ -121,7 +121,8 @@
 
                 <!-- Edit -->
                 <button
-                  class="rounded-lg bg-amber-50 p-2 text-amber-600 transition hover:bg-amber-100"
+                  [routerLink]="['/admin/users/edit', user.encryptedId]"
+                  class="rounded-lg bg-amber-50 p-2 text-amber-600 transition hover:bg-amber-100 cursor-pointer"
                   title="Edit"
                 >
                   <i class="fa-solid fa-pen-to-square"></i>
@@ -129,7 +130,7 @@
 
                 <!-- Delete -->
                 <button
-                  class="rounded-lg bg-red-50 p-2 text-red-600 transition hover:bg-red-100"
+                  class="rounded-lg bg-red-50 p-2 text-red-600 transition hover:bg-red-100 cursor-pointer"
                   title="Delete"
                 >
                   <i class="fa-solid fa-trash"></i>

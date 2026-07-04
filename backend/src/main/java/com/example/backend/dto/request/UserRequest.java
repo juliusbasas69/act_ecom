@@ -7,7 +7,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
-public record UserCreateRequest(
+public record UserRequest(
     @NotBlank(message = FIRST_NAME_REQUIRED)
     @Size(max = 12, message = FIRST_NAME_MAX_LENGTH)
     String firstName,

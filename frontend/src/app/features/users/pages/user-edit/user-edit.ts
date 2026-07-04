@@ -1,31 +1,47 @@
-import { Component, inject } from '@angular/core';
-import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { Router, RouterLink } from '@angular/router';
-import { UserService } from '../../services/user.service';
-import { SuccessResponse } from '../../../../shared/models/success-response.model';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { UserRequest } from '../../models/user-request.model';
+import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { UserService } from '../../services/user.service';
 import { FlashMessageService } from '../../../../shared/services/flash-message.service';
+import { SuccessResponse } from '../../../../shared/models/success-response.model';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { UserFormService } from '../../../../shared/services/user-form.service';
+import { UserResponse } from '../../models/user-response.model';
 
 @Component({
-  selector: 'app-user-create',
-  standalone: true,
+  selector: 'app-user-edit',
   imports: [RouterLink, ReactiveFormsModule],
-  templateUrl: './user-create.html',
-  styleUrl: './user-create.css',
+  templateUrl: './user-edit.html',
+  styleUrl: './user-edit.css',
 })
-export class UserCreate {
-  private fb = inject(FormBuilder);
+export class UserEdit implements OnInit {
   private userService = inject(UserService);
   private router = inject(Router);
+  private readonly route = inject(ActivatedRoute);
   private flashMessageService = inject(FlashMessageService);
   private userFormService = inject(UserFormService);
 
+  _user = signal<UserResponse | null>(null);
   userForm = this.userFormService.createForm();
+
+  ngOnInit(): void {
+    const encryptedId = this.route.snapshot.paramMap.get('encryptedId');
+
+    if (!encryptedId) {
+      return;
+    }
+
+    this.userService.findUserById(encryptedId).subscribe({
+      next: (response) => {
+        console.log(response);
+        this.userForm.patchValue(response);
+      },
+    });
+  }
 
   onSubmit(): void {
     const request = this.userForm.getRawValue() as UserRequest;
-    console.log(request);
+
     this.userService.create(request).subscribe({
       next: (response: SuccessResponse) => {
         console.log(response.message);

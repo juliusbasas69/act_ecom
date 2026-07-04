@@ -1,5 +1,7 @@
 package com.example.backend.dao;
 
+import java.util.Optional;
+
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -34,4 +36,13 @@ public interface UserDao extends JpaRepository<UserEntity, Integer>{
 	
 	@Query(GET_ALL_USERS)
 	public Page<UserEntity> getAllUsers(Pageable pageable, @Param("search") String search) throws DataAccessException;
+
+
+	public final String GET_USER_BY_ID = """
+			SELECT e
+			FROM UserEntity e
+			WHERE e.isDeleted = false
+			AND e.id = :id
+			""";
+	public Optional<UserEntity> findUserById(@Param("id") int id) throws DataAccessException;
 }

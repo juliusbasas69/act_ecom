@@ -6,7 +6,8 @@ import { User } from '../models/user.model';
 import { Observable } from 'rxjs';
 import { StorageUtil } from '../../../shared/utils/storage.utils';
 import { SuccessResponse } from '../../../shared/models/success-response.model';
-import { UserCreateRequest } from '../models/user-create.model';
+import { UserRequest } from '../models/user-request.model';
+import { UserResponse } from '../models/user-response.model';
 
 @Injectable({
   providedIn: 'root',
@@ -24,12 +25,21 @@ export class UserService {
     });
   }
 
-  create(request: UserCreateRequest): Observable<SuccessResponse> {
+  create(request: UserRequest): Observable<SuccessResponse> {
     console.log(request);
     const token = StorageUtil.getToken();
     const api = `${this.apiUrl}/create`;
 
     return this.http.post<SuccessResponse>(api, request, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+  }
+
+  findUserById(encryptedId: string): Observable<UserResponse> {
+    const token = StorageUtil.getToken();
+    const api = `${this.apiUrl}/edit/${encryptedId}`;
+    console.log(api);
+    return this.http.get<UserResponse>(api, {
       headers: { Authorization: `Bearer ${token}` },
     });
   }

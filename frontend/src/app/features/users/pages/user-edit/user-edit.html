@@ -2,7 +2,7 @@
   <!-- Header -->
   <div class="mb-6 flex items-center justify-between">
     <div>
-      <h1 class="text-2xl font-bold text-slate-800">Create User</h1>
+      <h1 class="text-2xl font-bold text-slate-800">Edit User</h1>
       <p class="mt-1 text-sm text-slate-500">Add a new user to the system.</p>
     </div>
 
@@ -31,6 +31,7 @@
                 type="text"
                 formControlName="firstName"
                 name="firstName"
+                [value]="_user()?.firstName"
                 placeholder="Enter first name"
                 class="w-full rounded-xl border border-sky-200 px-4 py-3 text-sm outline-none transition focus:border-sky-500 focus:ring-2 focus:ring-sky-100"
               />
@@ -53,6 +54,7 @@
                 type="text"
                 formControlName="familyName"
                 name="familyName"
+                [value]="_user()?.familyName"
                 placeholder="Enter family name"
                 class="w-full rounded-xl border border-sky-200 px-4 py-3 text-sm outline-none transition focus:border-sky-500 focus:ring-2 focus:ring-sky-100"
               />
@@ -77,6 +79,7 @@
               type="email"
               formControlName="email"
               name="email"
+              [value]="_user()?.firstName"
               placeholder="example@email.com"
               class="w-full rounded-xl border border-sky-200 px-4 py-3 text-sm outline-none transition focus:border-sky-500 focus:ring-2 focus:ring-sky-100"
             />
@@ -174,7 +177,7 @@
               type="submit"
               class="cursor-pointer rounded-xl bg-sky-600 px-6 py-2.5 text-sm font-medium text-white transition hover:bg-sky-700"
             >
-              CREATE USER
+              EDIT USER
             </button>
           </div>
         </form>

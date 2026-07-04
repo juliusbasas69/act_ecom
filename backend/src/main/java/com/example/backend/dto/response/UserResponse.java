@@ -6,7 +6,7 @@ import lombok.Builder;
 
 @Builder
 public record UserResponse(
-    String userId,
+    String encryptedId,
     String firstName,
     String familyName,
     String email,
