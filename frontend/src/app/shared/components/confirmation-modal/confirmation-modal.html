@@ -1,0 +1,48 @@
+@if (visible) {
+  <div
+    class="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4"
+    (click)="onCancel()"
+  >
+    <div class="w-full max-w-md rounded-2xl bg-white shadow-2xl" (click)="$event.stopPropagation()">
+      <!-- Header -->
+      <div class="flex items-center gap-4 border-b border-slate-200 px-6 py-5">
+        <div class="flex h-12 w-12 items-center justify-center rounded-full bg-red-100">
+          <i class="fa-solid fa-triangle-exclamation text-xl text-red-600"></i>
+        </div>
+
+        <div>
+          <h2 class="text-lg font-bold text-slate-800">
+            {{ title }}
+          </h2>
+
+          <p class="text-sm text-slate-500">Please confirm your action.</p>
+        </div>
+      </div>
+
+      <!-- Body -->
+      <div class="px-6 py-5">
+        <p class="text-sm leading-6 text-slate-600">
+          {{ message }}
+        </p>
+      </div>
+
+      <!-- Footer -->
+      <div class="flex justify-end gap-3 border-t border-slate-200 px-6 py-4">
+        <button
+          (click)="onCancel()"
+          class="cursor-pointer rounded-lg border border-slate-300 px-4 py-2 text-sm font-medium text-slate-700 transition hover:bg-slate-100"
+        >
+          {{ cancelText }}
+        </button>
+
+        <button
+          (click)="onConfirm()"
+          class="cursor-pointer rounded-lg px-4 py-2 text-sm font-medium text-white transition"
+          [class]="confirmButtonClass"
+        >
+          {{ confirmText }}
+        </button>
+      </div>
+    </div>
+  </div>
+}

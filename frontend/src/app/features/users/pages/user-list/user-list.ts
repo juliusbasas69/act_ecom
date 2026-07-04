@@ -8,10 +8,12 @@ import { PaginationComponent } from '../../../../shared/components/pagination/pa
 import { debounceTime, distinctUntilChanged, Subject } from 'rxjs';
 import { RouterLink } from '@angular/router';
 import { FlashMessageService } from '../../../../shared/services/flash-message.service';
+import { ConfirmationModal } from '../../../../shared/components/confirmation-modal/confirmation-modal';
+import { UserResponse } from '../../models/user-response.model';
 
 @Component({
   selector: 'app-user-list',
-  imports: [PaginationComponent, RouterLink, DatePipe],
+  imports: [PaginationComponent, RouterLink, DatePipe, ConfirmationModal],
   templateUrl: './user-list.html',
   styleUrl: './user-list.css',
 })
@@ -20,6 +22,9 @@ export class UserList implements OnInit {
   private flashMessageService = inject(FlashMessageService);
 
   private readonly searchSubject = new Subject<string>();
+
+  readonly showDeleteModal = signal(false);
+  readonly selectedUser = signal<UserResponse | null>(null);
 
   _users = signal<Array<User>>([]);
   _pagination = signal<Pagination | null>(null);
@@ -55,5 +60,37 @@ export class UserList implements OnInit {
     const value = (event.target as HTMLInputElement).value;
 
     this.searchSubject.next(value);
+  }
+
+  openDeleteModal(user: UserResponse): void {
+    this.selectedUser.set(user);
+    this.showDeleteModal.set(true);
+  }
+
+  closeDeleteModal(): void {
+    this.showDeleteModal.set(false);
+    this.selectedUser.set(null);
+  }
+
+  confirmDelete(): void {
+    const user = this.selectedUser();
+
+    if (!user) {
+      return;
+    }
+
+    this.userService.delete(user.encryptedId).subscribe({
+      next: (response) => {
+        console.log(response);
+        this.flashMessageService.success(response.message);
+
+        this.closeDeleteModal();
+
+        this.loadUsers(this._pagination()?.page ?? 0);
+      },
+      error: (err) => {
+        console.log(err);
+      },
+    });
   }
 }

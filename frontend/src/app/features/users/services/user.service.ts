@@ -52,4 +52,17 @@ export class UserService {
       headers: { Authorization: `Bearer ${token}` },
     });
   }
+
+  delete(encryptedId: string | null): Observable<SuccessResponse> {
+    const token = StorageUtil.getToken();
+    const api = `${this.apiUrl}/delete/${encryptedId}`;
+    console.log('THIS IS API: ' + api);
+    return this.http.post<SuccessResponse>(
+      api,
+      {},
+      {
+        headers: { Authorization: `Bearer ${token}` },
+      },
+    );
+  }
 }
