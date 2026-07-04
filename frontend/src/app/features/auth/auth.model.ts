@@ -14,5 +14,6 @@ export interface AuthResponse {
   encrpytedId: string;
   email: string;
   role: 'USER' | 'ADMIN';
+  fullName: string;
   token: string;
 }

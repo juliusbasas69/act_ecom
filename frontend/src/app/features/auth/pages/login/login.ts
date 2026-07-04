@@ -33,6 +33,7 @@ export class Login {
     this.authService.login(request).subscribe({
       next: (response: AuthResponse) => {
         console.log('This is role: ' + response.role);
+        console.log(response);
         switch (response.role) {
           case 'ADMIN':
             this.router.navigate(['/admin/dashboard']);

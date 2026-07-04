@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
   styleUrl: './admin-header.css',
 })
 export class AdminHeader {
-  private authService = inject(AuthService);
+  readonly authService = inject(AuthService);
   private router = inject(Router);
 
   @Output() toggleSidebar = new EventEmitter<void>();
@@ -21,5 +21,21 @@ export class AdminHeader {
   onLogout() {
     this.authService.logout('manual');
     this.router.navigate(['/login']);
+  }
+
+  get initials(): string {
+    const fullName = this.authService.fullName();
+
+    if (!fullName) {
+      return '?';
+    }
+
+    return fullName
+      .split(' ')
+      .filter(Boolean)
+      .map((name: string) => name[0])
+      .slice(0, 2)
+      .join('')
+      .toUpperCase();
   }
 }

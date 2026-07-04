@@ -80,23 +80,23 @@
       <!-- Admin -->
       <div class="hidden items-center gap-3 md:flex">
         <div class="text-right">
-          <p class="text-sm font-semibold text-slate-800">Administrator</p>
-          <p class="text-xs text-slate-500">System Management</p>
+          <p class="text-sm font-semibold text-slate-800">{{ this.authService.fullName() }}</p>
+          <p class="text-xs text-slate-500">{{ authService.email() }}</p>
         </div>
 
         <div
           class="flex h-10 w-10 items-center justify-center rounded-full bg-sky-500 font-semibold text-white"
         >
-          A
+          {{ initials }}
         </div>
       </div>
 
       <!-- Logout -->
       <button
         (click)="onLogout()"
-        class="rounded-lg bg-red-500 px-4 py-2 text-sm font-medium text-white transition hover:bg-red-600"
+        class="rounded-lg bg-red-500 px-4 py-2 text-sm font-medium text-white transition hover:bg-red-600 cursor-pointer"
       >
-        Logout
+        LOGOUT
       </button>
     </div>
   </div>

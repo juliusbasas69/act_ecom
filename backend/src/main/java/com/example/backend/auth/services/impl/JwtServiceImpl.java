@@ -36,6 +36,7 @@ public class JwtServiceImpl implements JwtService{
             .setSubject(String.valueOf(user.getId()))
             .claim("email", user.getEmail())
             .claim("role", user.getRole())
+            .claim("fullName", user.getFirstName() + " " + user.getFamilyName())
             .setIssuedAt(new Date(System.currentTimeMillis()))
             .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
             .signWith(getSigningKey(), SignatureAlgorithm.HS256)

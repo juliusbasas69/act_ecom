@@ -65,6 +65,7 @@ public class AuthServiceImpl implements AuthService{
 	    return new AuthResponse(CipherUtil.encrypt(String.valueOf(user.getId())),
 	    		user.getEmail(), 
 	    		user.getRole(), 
+                user.getFirstName() + " " + user.getFamilyName(),
 	    		token);
       
     }
