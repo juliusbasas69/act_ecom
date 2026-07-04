@@ -19,9 +19,19 @@ public interface UserDao extends JpaRepository<UserEntity, Integer>{
 	public UserEntity findUserByEmail(@Param("email") String email) throws DataAccessException;
 
 	public final String GET_ALL_USERS = """
-			SELECT e FROM UserEntity e WHERE e.isDeleted = false
+			SELECT e 
+			FROM UserEntity e 
+			WHERE e.isDeleted = false
+			AND (
+				(:search IS NOT NULL AND :search <> '' AND (
+					LOWER(e.firstName) LIKE LOWER(CONCAT('%', :search, '%')) OR
+					LOWER(e.familyName) LIKE LOWER(CONCAT('%', :search, '%')) OR
+					LOWER(e.email) LIKE LOWER(CONCAT('%', :search, '%')) 
+				))
+				OR (:search IS NULL OR :search = '')
+			)
 			""";
 	
 	@Query(GET_ALL_USERS)
-	public Page<UserEntity> getAllUsers(Pageable pageable) throws DataAccessException;
+	public Page<UserEntity> getAllUsers(Pageable pageable, @Param("search") String search) throws DataAccessException;
 }

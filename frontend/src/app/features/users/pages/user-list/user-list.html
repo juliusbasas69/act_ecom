@@ -34,6 +34,8 @@
       <input
         type="text"
         placeholder="Search users..."
+        [value]="search()"
+        (input)="onSearch($event)"
         class="w-full rounded-xl border border-sky-200 bg-white py-2.5 pl-10 pr-4 text-sm outline-none transition focus:border-sky-500 focus:ring-2 focus:ring-sky-100"
       />
     </div>

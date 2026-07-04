@@ -57,11 +57,11 @@ public class UserLogicImpl implements UserLogic{
     }
 
     @Override
-    public Page<UserEntity> getAllUsers(int page) {
+    public Page<UserEntity> getAllUsers(int page, String search) {
 
         Pageable pageable = PageRequest.of(page, Integer.parseInt(USER_MAX_DISPLAY));
         
-        return userDao.getAllUsers(pageable);
+        return userDao.getAllUsers(pageable, search);
     }
     
 }

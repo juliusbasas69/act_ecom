@@ -8,5 +8,5 @@ import com.example.backend.dto.response.UserResponse;
 @Service
 public interface UserService {
     
-    public PageResponse<UserResponse> getAllUsers(int page) throws Exception;
+    public PageResponse<UserResponse> getAllUsers(int page, String search) throws Exception;
 }

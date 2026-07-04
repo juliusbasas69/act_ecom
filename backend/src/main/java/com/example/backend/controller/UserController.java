@@ -23,11 +23,11 @@ public class UserController {
     }
     
     @GetMapping
-    public ResponseEntity<PageResponse<UserResponse>> getAllUsers(int page) {
+    public ResponseEntity<PageResponse<UserResponse>> getAllUsers(int page, String search) {
 
         try {
 
-            PageResponse<UserResponse> response = userService.getAllUsers(page);
+            PageResponse<UserResponse> response = userService.getAllUsers(page, search);
 
             return ResponseEntity.ok(response);
 

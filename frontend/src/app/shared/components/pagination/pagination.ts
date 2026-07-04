@@ -15,6 +15,7 @@ export class PaginationComponent {
   @Output() pageChange = new EventEmitter<number>();
 
   previousPage(): void {
+    console.log('PREV');
     if (this.pagination.hasPrevious) {
       this.pageChange.emit(this.pagination.page - 1);
     }
@@ -34,6 +35,6 @@ export class PaginationComponent {
       return;
     }
 
-    this.pageChange.emit(page - 1); // Backend uses zero-based pages
+    this.pageChange.emit(page - 1);
   }
 }

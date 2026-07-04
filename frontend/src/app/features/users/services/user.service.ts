@@ -12,12 +12,12 @@ export class UserService {
   private http = inject(HttpClient);
   private readonly apiUrl = `${environment.apiUrl}/users`;
 
-  getUsers(page: number): Observable<PagedResponse<User>> {
+  getUsers(page: number, search: string): Observable<PagedResponse<User>> {
     const token = localStorage.getItem('token');
 
     return this.http.get<PagedResponse<User>>(this.apiUrl, {
       headers: { Authorization: `Bearer ${token}` },
-      params: { page: page.toString() },
+      params: { page: page.toString(), search: search },
     });
   }
 }

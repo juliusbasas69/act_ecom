@@ -14,5 +14,5 @@ public interface UserLogic {
 
 	public UserEntity findUserByEmail(String email);
 
-    public Page<UserEntity> getAllUsers(int page);
+    public Page<UserEntity> getAllUsers(int page, String search);
 }

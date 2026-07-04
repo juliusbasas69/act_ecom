@@ -19,9 +19,9 @@ public class UserServiceImpl implements UserService {
     private UserLogic userLogic;
 
     @Override
-    public PageResponse<UserResponse> getAllUsers(int page) throws Exception{
+    public PageResponse<UserResponse> getAllUsers(int page, String search) throws Exception{
         
-        Page<UserEntity> users = userLogic.getAllUsers(page);
+        Page<UserEntity> users = userLogic.getAllUsers(page, search);
 
         return PageResponse.<UserResponse>builder()
             .content(
