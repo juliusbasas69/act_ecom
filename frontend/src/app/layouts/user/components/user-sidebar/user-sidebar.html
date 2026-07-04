@@ -1,0 +1,29 @@
+<!-- Overlay -->
+<div *ngIf="isSidebarOpen" class="fixed inset-0 z-40 bg-black/40" (click)="onClose()"></div>
+
+<!-- Sidebar -->
+<aside
+  class="fixed left-0 top-0 z-50 h-full w-64 bg-white shadow-xl transform transition-transform duration-300"
+  [class.translate-x-0]="isSidebarOpen"
+  [class.-translate-x-full]="!isSidebarOpen"
+>
+  <!-- Header inside sidebar -->
+  <div class="flex items-center justify-between border-b border-sky-100 p-4">
+    <h2 class="font-bold text-slate-800">Menu</h2>
+
+    <button (click)="onClose()" class="text-slate-500 hover:text-slate-800">✕</button>
+  </div>
+
+  <!-- Links -->
+  <nav class="flex flex-col p-4 gap-2">
+    <a routerLink="/dashboard" (click)="onClose()" class="rounded p-2 hover:bg-sky-50">
+      Dashboard
+    </a>
+
+    <a routerLink="/products" (click)="onClose()" class="rounded p-2 hover:bg-sky-50"> Products </a>
+
+    <a routerLink="/orders" (click)="onClose()" class="rounded p-2 hover:bg-sky-50"> Orders </a>
+
+    <a routerLink="/users" (click)="onClose()" class="rounded p-2 hover:bg-sky-50"> Users </a>
+  </nav>
+</aside>

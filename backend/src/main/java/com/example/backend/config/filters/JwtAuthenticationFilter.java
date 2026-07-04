@@ -30,45 +30,73 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                                     FilterChain filterChain)
             throws ServletException, IOException {
 
-        String path = request.getServletPath();
+        //String path = request.getServletPath();
 
         // allow auth endpoints
-        if (path.startsWith("/auth")) {
-            filterChain.doFilter(request, response);
-            return;
-        }
+        // if (path.startsWith("/auth")) {
+        //     filterChain.doFilter(request, response);
+        //     return;
+        // }
+
+        // String header = request.getHeader("Authorization");
+
+        // if (header == null || !header.startsWith("Bearer ")) {
+        //     response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+        //     return;
+        // }
+
+        // String token = header.substring(7);
+
+        // if (!jwtService.isValid(token)) {
+        //     response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+        //     return;
+        // }
+
+        // // extract user info
+        // String email = jwtService.extractUsername(token);
+        // String role = jwtService.extractRole(token);
+                
+        // List<GrantedAuthority> authorities = List.of(
+        //         new SimpleGrantedAuthority("ROLE_" + role)
+        // );
+
+        // UsernamePasswordAuthenticationToken auth =
+        //         new UsernamePasswordAuthenticationToken(
+        //                 email,
+        //                 null,
+        //                 authorities
+        //         );
+
+        // SecurityContextHolder.getContext().setAuthentication(auth);
+
+        // filterChain.doFilter(request, response);
 
         String header = request.getHeader("Authorization");
 
-        if (header == null || !header.startsWith("Bearer ")) {
-            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-            return;
+        if (header != null && header.startsWith("Bearer ")) {
+
+            String token = header.substring(7);
+
+            if (jwtService.isValid(token)) {
+
+                String email = jwtService.extractUsername(token);
+                String role = jwtService.extractRole(token);
+
+                List<GrantedAuthority> authorities =
+                        List.of(new SimpleGrantedAuthority("ROLE_" + role));
+
+                UsernamePasswordAuthenticationToken auth =
+                        new UsernamePasswordAuthenticationToken(
+                                email,
+                                null,
+                                authorities
+                        );
+
+                SecurityContextHolder.getContext().setAuthentication(auth);
+            }
         }
 
-        String token = header.substring(7);
-
-        if (!jwtService.isValid(token)) {
-            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-            return;
-        }
-
-        // extract user info
-        String email = jwtService.extractUsername(token);
-        String role = jwtService.extractRole(token);
-                
-        List<GrantedAuthority> authorities = List.of(
-                new SimpleGrantedAuthority("ROLE_" + role)
-        );
-
-        UsernamePasswordAuthenticationToken auth =
-                new UsernamePasswordAuthenticationToken(
-                        email,
-                        null,
-                        authorities
-                );
-
-        SecurityContextHolder.getContext().setAuthentication(auth);
-
+        // ALWAYS continue
         filterChain.doFilter(request, response);
     }
 }

@@ -1,0 +1,103 @@
+<header
+  class="sticky top-0 z-50 border-b border-sky-200 bg-gradient-to-r from-white to-sky-50 shadow-sm"
+>
+  <div class="mx-auto flex h-16 max-w-7xl items-center justify-between px-6">
+    <!-- LEFT -->
+    <div class="flex items-center gap-4">
+      <!-- Burger -->
+      <button (click)="onToggleSidebar()" class="rounded-lg p-2 transition hover:bg-sky-100">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-6 w-6 text-slate-700"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M4 6h16M4 12h16M4 18h16"
+          />
+        </svg>
+      </button>
+
+      <!-- Logo -->
+      <a routerLink="/" class="flex items-center gap-3">
+        <div
+          class="flex h-11 w-11 items-center justify-center rounded-full bg-sky-100 ring-2 ring-sky-200"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-6 w-6 text-sky-600"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M17 3l5 9-5 9H7l-5-9 5-9h10z" />
+          </svg>
+        </div>
+
+        <div class="hidden sm:block">
+          <div class="flex items-center gap-2">
+            <h1 class="text-lg font-bold text-slate-800">ACT E-Commerce</h1>
+
+            <span
+              class="rounded-full bg-red-100 px-2 py-0.5 text-xs font-bold uppercase tracking-wide text-red-700"
+            >
+              Admin
+            </span>
+          </div>
+
+          <p class="text-xs text-slate-500">Administration Dashboard</p>
+        </div>
+      </a>
+    </div>
+
+    <!-- RIGHT -->
+    <div class="flex items-center gap-4">
+      <!-- Notification -->
+      <button class="rounded-lg p-2 text-slate-600 transition hover:bg-sky-100 hover:text-sky-600">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-6 w-6"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0a3 3 0 11-6 0h6z"
+          />
+        </svg>
+      </button>
+
+      <!-- Admin -->
+      <div class="hidden items-center gap-3 md:flex">
+        <div class="text-right">
+          <p class="text-sm font-semibold text-slate-800">Administrator</p>
+          <p class="text-xs text-slate-500">System Management</p>
+        </div>
+
+        <div
+          class="flex h-10 w-10 items-center justify-center rounded-full bg-sky-500 font-semibold text-white"
+        >
+          A
+        </div>
+      </div>
+
+      <!-- Logout -->
+      <button
+        (click)="onLogout()"
+        class="rounded-lg bg-red-500 px-4 py-2 text-sm font-medium text-white transition hover:bg-red-600"
+      >
+        Logout
+      </button>
+    </div>
+  </div>
+</header>
