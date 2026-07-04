@@ -4,6 +4,7 @@ import { Router, RouterLink } from '@angular/router';
 import { UserService } from '../../services/user.service';
 import { SuccessResponse } from '../../../../shared/models/success-response.model';
 import { UserCreateRequest } from '../../models/user-create.model';
+import { FlashMessageService } from '../../../../shared/services/flash-message.service';
 
 @Component({
   selector: 'app-user-create',
@@ -16,6 +17,7 @@ export class UserCreate {
   private fb = inject(FormBuilder);
   private userService = inject(UserService);
   private router = inject(Router);
+  private flashMessageService = inject(FlashMessageService);
 
   createForm = this.fb.group({
     firstName: [''],
@@ -33,10 +35,21 @@ export class UserCreate {
       next: (response: SuccessResponse) => {
         console.log(response.message);
 
+        this.flashMessageService.success(response.message);
         this.router.navigate(['/admin/users']);
       },
       error: (error) => {
-        console.error(error);
+        const errors = error.error as Record<string, string[]>;
+
+        Object.entries(errors).forEach(([field, messages]) => {
+          const control = this.createForm.get(field);
+
+          if (control) {
+            control.setErrors({
+              server: messages,
+            });
+          }
+        });
       },
     });
   }

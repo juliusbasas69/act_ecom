@@ -34,6 +34,14 @@
                 placeholder="Enter first name"
                 class="w-full rounded-xl border border-sky-200 px-4 py-3 text-sm outline-none transition focus:border-sky-500 focus:ring-2 focus:ring-sky-100"
               />
+
+              @if (createForm.get('firstName')?.errors?.['server']; as errors) {
+                @for (error of errors; track error) {
+                  <p class="mt-1 text-sm text-red-600">
+                    {{ error }}
+                  </p>
+                }
+              }
             </div>
 
             <div>
@@ -48,6 +56,14 @@
                 placeholder="Enter family name"
                 class="w-full rounded-xl border border-sky-200 px-4 py-3 text-sm outline-none transition focus:border-sky-500 focus:ring-2 focus:ring-sky-100"
               />
+
+              @if (createForm.get('familyName')?.errors?.['server']; as errors) {
+                @for (error of errors; track error) {
+                  <p class="mt-1 text-sm text-red-600">
+                    {{ error }}
+                  </p>
+                }
+              }
             </div>
           </div>
 
@@ -64,6 +80,14 @@
               placeholder="example@email.com"
               class="w-full rounded-xl border border-sky-200 px-4 py-3 text-sm outline-none transition focus:border-sky-500 focus:ring-2 focus:ring-sky-100"
             />
+
+            @if (createForm.get('email')?.errors?.['server']; as errors) {
+              @for (error of errors; track error) {
+                <p class="mt-1 text-sm text-red-600">
+                  {{ error }}
+                </p>
+              }
+            }
           </div>
 
           <!-- Password -->
@@ -79,6 +103,14 @@
                 placeholder="Enter password"
                 class="w-full rounded-xl border border-sky-200 px-4 py-3 text-sm outline-none transition focus:border-sky-500 focus:ring-2 focus:ring-sky-100"
               />
+
+              @if (createForm.get('password')?.errors?.['server']; as errors) {
+                @for (error of errors; track error) {
+                  <p class="mt-1 text-sm text-red-600">
+                    {{ error }}
+                  </p>
+                }
+              }
             </div>
 
             <div>
@@ -92,6 +124,14 @@
                 placeholder="Confirm password"
                 class="w-full rounded-xl border border-sky-200 px-4 py-3 text-sm outline-none transition focus:border-sky-500 focus:ring-2 focus:ring-sky-100"
               />
+
+              @if (createForm.get('confirmPassword')?.errors?.['server']; as errors) {
+                @for (error of errors; track error) {
+                  <p class="mt-1 text-sm text-red-600">
+                    {{ error }}
+                  </p>
+                }
+              }
             </div>
           </div>
 
@@ -110,6 +150,14 @@
               <option value="Administrator">ADMIN</option>
               <option value="User">USER</option>
             </select>
+
+            @if (createForm.get('role')?.errors?.['server']; as errors) {
+              @for (error of errors; track error) {
+                <p class="mt-1 text-sm text-red-600">
+                  {{ error }}
+                </p>
+              }
+            }
           </div>
 
           <!-- Buttons -->

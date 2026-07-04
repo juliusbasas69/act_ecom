@@ -2,22 +2,35 @@ package com.example.backend.controller;
 
 import static com.example.backend.common.constants.MessageConstant.*;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.backend.common.constants.MessageConstant;
 import com.example.backend.dto.request.UserCreateRequest;
 import com.example.backend.dto.response.ErrorResponse;
 import com.example.backend.dto.response.PageResponse;
 import com.example.backend.dto.response.SuccessResponse;
 import com.example.backend.dto.response.UserResponse;
 import com.example.backend.service.UserService;
+
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/users")
@@ -54,7 +67,25 @@ public class UserController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<?> createUser(@RequestBody UserCreateRequest request){
+    public ResponseEntity<?> createUser(@Valid @RequestBody UserCreateRequest request, BindingResult bindingResult){
+
+        if (bindingResult.hasErrors()) {
+
+            Map<String, List<String>> errors = new HashMap<>();
+
+            for (FieldError error : bindingResult.getFieldErrors()) {
+                errors.computeIfAbsent(error.getField(), key -> new ArrayList<>())
+                    .add(error.getDefaultMessage());
+            }
+            
+            //This is to check password and confirm password temporarily
+            if (!request.password().equals(request.confirmPassword())) {
+                errors.computeIfAbsent("password", key -> new ArrayList<>())
+                    .add(MessageConstant.PASSWORDS_DO_NOT_MATCH);
+            }
+
+            return ResponseEntity.badRequest().body(errors);
+        }
 
         try{
 

@@ -13,12 +13,12 @@ export class AuthService {
   private readonly apiUrl = `${environment.apiUrl}/auth`;
   private readonly tokenKey = 'token';
 
-  readonly currentUserToken = signal<string | null>(localStorage.getItem(this.tokenKey));
+  readonly _currentUserToken = signal<string | null>(localStorage.getItem(this.tokenKey));
 
-  readonly isLoggedIn = computed(() => this.currentUserToken() !== null);
+  readonly isLoggedIn = computed(() => this._currentUserToken() !== null);
 
   readonly role = computed(() => {
-    const token = this.currentUserToken();
+    const token = this._currentUserToken();
 
     if (!token) {
       return null;
@@ -41,12 +41,12 @@ export class AuthService {
 
   logout(): void {
     localStorage.removeItem(this.tokenKey);
-    this.currentUserToken.set(null);
+    this._currentUserToken.set(null);
   }
 
   private handleAuthSuccess(token: string): void {
     localStorage.setItem(this.tokenKey, token);
-    this.currentUserToken.set(token);
+    this._currentUserToken.set(token);
 
     console.log(this.role()); // Should print USER
     console.log(this.isLoggedIn()); // Should print true
