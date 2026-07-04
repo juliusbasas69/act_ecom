@@ -12,10 +12,20 @@ export class AuthService {
   private readonly http = inject(HttpClient);
   private readonly apiUrl = `${environment.apiUrl}/auth`;
   private readonly tokenKey = 'token';
+  private readonly _logoutReason = signal<string | null>(null);
+  readonly logoutReason = computed(() => this._logoutReason());
 
   readonly _currentUserToken = signal<string | null>(localStorage.getItem(this.tokenKey));
 
-  readonly isLoggedIn = computed(() => this._currentUserToken() !== null);
+  readonly isLoggedIn = computed(() => {
+    const token = this._currentUserToken();
+
+    if (!token) return false;
+
+    const expired = this.isTokenExpired();
+
+    return !expired;
+  });
 
   readonly role = computed(() => {
     const token = this._currentUserToken();
@@ -39,9 +49,11 @@ export class AuthService {
       .pipe(tap((response) => this.handleAuthSuccess(response.token)));
   }
 
-  logout(): void {
+  logout(reason: string | null = null): void {
     localStorage.removeItem(this.tokenKey);
     this._currentUserToken.set(null);
+
+    this._logoutReason.set(reason);
   }
 
   private handleAuthSuccess(token: string): void {
@@ -50,5 +62,18 @@ export class AuthService {
 
     console.log(this.role()); // Should print USER
     console.log(this.isLoggedIn()); // Should print true
+  }
+
+  isTokenExpired(): boolean {
+    const token = this._currentUserToken();
+
+    if (!token) return true;
+
+    try {
+      const payload = JSON.parse(atob(token.split('.')[1]));
+      return Date.now() >= payload.exp * 1000;
+    } catch {
+      return true;
+    }
   }
 }

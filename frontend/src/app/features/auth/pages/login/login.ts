@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, computed, inject, OnInit } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../auth.service';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
@@ -11,10 +11,18 @@ import { HttpErrorResponse } from '@angular/common/http';
   templateUrl: './login.html',
   styleUrl: './login.css',
 })
-export class Login {
+export class Login implements OnInit {
   private fb = inject(FormBuilder);
   private authService = inject(AuthService);
   private router = inject(Router);
+
+  private auth = inject(AuthService);
+
+  sessionExpired = computed(() => this.auth.logoutReason() === 'expired');
+
+  ngOnInit() {
+    //this.authService.logout('expired');
+  }
 
   loginForm = this.fb.group({
     email: [''],

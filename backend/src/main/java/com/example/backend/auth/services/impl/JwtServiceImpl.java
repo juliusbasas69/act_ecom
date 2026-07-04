@@ -22,6 +22,8 @@ public class JwtServiceImpl implements JwtService{
 
     //1 Hour po
     private static final long EXPIRATION_TIME = 1000 * 60 * 60;
+    //private static final long EXPIRATION_TIME = 1000 * 60;
+    //private static final long EXPIRATION_TIME = 1000 * 10;
 
     private Key getSigningKey(){
         return Keys.hmacShaKeyFor(SECRET_KEY.getBytes());
