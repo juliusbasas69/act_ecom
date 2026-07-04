@@ -33,6 +33,13 @@
         ⚠️ Your session has expired. Please log in again.
       </div>
     }
+    @if (!_isValid()) {
+      <div
+        class="mt-4 rounded-xl border border-red-200 bg-red-50 p-3 text-center text-sm text-red-700"
+      >
+        Invalid user or password
+      </div>
+    }
 
     <!-- Form -->
     <form class="mt-8 space-y-5" [formGroup]="loginForm" (ngSubmit)="onSubmit()">

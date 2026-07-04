@@ -1,4 +1,4 @@
-import { Component, computed, inject, OnInit } from '@angular/core';
+import { Component, computed, inject, OnInit, signal } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../auth.service';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
@@ -11,18 +11,15 @@ import { HttpErrorResponse } from '@angular/common/http';
   templateUrl: './login.html',
   styleUrl: './login.css',
 })
-export class Login implements OnInit {
+export class Login {
   private fb = inject(FormBuilder);
   private authService = inject(AuthService);
   private router = inject(Router);
 
   private auth = inject(AuthService);
+  _isValid = signal(true);
 
   sessionExpired = computed(() => this.auth.logoutReason() === 'expired');
-
-  ngOnInit() {
-    //this.authService.logout('expired');
-  }
 
   loginForm = this.fb.group({
     email: [''],
@@ -53,9 +50,9 @@ export class Login implements OnInit {
       error: (err: HttpErrorResponse) => {
         console.log(err);
 
-        console.log(err.status); // HTTP status (e.g. 401)
-        console.log(err.message); // Error message
-        console.log(err.error); // Response body from your backend
+        if (err.status === 401) {
+          this._isValid.set(false);
+        }
       },
     });
   }
