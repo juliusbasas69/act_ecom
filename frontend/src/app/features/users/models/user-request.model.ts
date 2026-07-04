@@ -1,8 +1,8 @@
-export interface User {
-  encryptedId: string;
+export interface UserRequest {
   firstName: string;
   familyName: string;
   email: string;
-  createdAt: string;
+  password: string;
+  confirmPassword: string;
   role: string;
 }

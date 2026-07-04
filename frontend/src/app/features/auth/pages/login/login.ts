@@ -21,7 +21,7 @@ export class Login {
     password: [''],
   });
 
-  onSubmit() {
+  onSubmit(): void {
     const request: LoginRequest = this.loginForm.getRawValue();
     console.log(request);
 

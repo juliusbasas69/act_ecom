@@ -40,6 +40,18 @@ export const routes: Routes = [
           return import('./features/users/pages/user-list/user-list').then((m) => m.UserList);
         },
       },
+      {
+        path: 'users/create',
+        loadComponent: () => {
+          return import('./features/users/pages/user-create/user-create').then((m) => m.UserCreate);
+        },
+      },
+      {
+        path: 'users/edit/:encryptedId',
+        loadComponent: () => {
+          return import('./features/users/pages/user-edit/user-edit').then((m) => m.UserEdit);
+        },
+      },
     ],
   },
 ];

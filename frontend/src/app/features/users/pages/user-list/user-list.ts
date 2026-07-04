@@ -6,26 +6,30 @@ import { User } from '../../models/user.model';
 import { Pagination } from '../../../../shared/models/pagination.model';
 import { PaginationComponent } from '../../../../shared/components/pagination/pagination';
 import { debounceTime, distinctUntilChanged, Subject } from 'rxjs';
+import { RouterLink } from '@angular/router';
+import { FlashMessageService } from '../../../../shared/services/flash-message.service';
 
 @Component({
   selector: 'app-user-list',
-  imports: [PaginationComponent],
+  imports: [PaginationComponent, RouterLink],
   templateUrl: './user-list.html',
   styleUrl: './user-list.css',
 })
 export class UserList implements OnInit {
   private readonly userService = inject(UserService);
+  private flashMessageService = inject(FlashMessageService);
 
   private readonly searchSubject = new Subject<string>();
 
-  users = signal<Array<User>>([]);
-  pagination = signal<Pagination | null>(null);
-  search = signal('');
+  _users = signal<Array<User>>([]);
+  _pagination = signal<Pagination | null>(null);
+  _search = signal('');
+  successMessage = this.flashMessageService.message;
 
   ngOnInit(): void {
     //This is debounce to avoid request every typing
     this.searchSubject.pipe(debounceTime(300), distinctUntilChanged()).subscribe((value) => {
-      this.search.set(value);
+      this._search.set(value);
       this.loadUsers(0, value);
     });
 
@@ -38,8 +42,8 @@ export class UserList implements OnInit {
         console.log('Response:', response);
         console.log('Content:', response.content);
 
-        this.users.set(response.content);
-        this.pagination.set(response.pagination);
+        this._users.set(response.content);
+        this._pagination.set(response.pagination);
       },
       error: (err) => {
         console.error(err);

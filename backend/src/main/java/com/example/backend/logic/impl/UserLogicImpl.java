@@ -1,6 +1,7 @@
 package com.example.backend.logic.impl;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -62,6 +63,12 @@ public class UserLogicImpl implements UserLogic{
         Pageable pageable = PageRequest.of(page, Integer.parseInt(USER_MAX_DISPLAY));
         
         return userDao.getAllUsers(pageable, search);
+    }
+
+    @Override
+    public Optional<UserEntity> findUserById(int id) {
+        
+        return userDao.findById(id);
     }
     
 }
