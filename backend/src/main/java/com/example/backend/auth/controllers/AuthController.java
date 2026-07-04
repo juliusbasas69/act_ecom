@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.backend.auth.dto.LoginRequest;
 import com.example.backend.auth.dto.AuthResponse;
 import com.example.backend.auth.services.AuthService;
-import com.example.backend.common.response.ErrorResponse;
+import com.example.backend.dto.response.ErrorResponse;
 
 @RestController
 @RequestMapping("/auth")
@@ -26,13 +26,16 @@ public class AuthController {
     public ResponseEntity<?> login(@RequestBody LoginRequest request){
         try{
             AuthResponse response = authService.login(request);
-            return ResponseEntity.ok(response);
+
+            return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(response);
+
         }catch(Exception e){
 
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+            return ResponseEntity
+                .status(HttpStatus.UNAUTHORIZED)
                 .body(new ErrorResponse(
-                    UNAUTHORIZED,
-                    "AUTH_ERROR",
                     e.getMessage()
                 ));
         }

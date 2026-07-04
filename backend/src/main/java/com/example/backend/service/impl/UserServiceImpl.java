@@ -2,10 +2,13 @@ package com.example.backend.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.example.backend.common.util.CipherUtil;
+import com.example.backend.common.util.DateUtil;
 import com.example.backend.dao.entity.UserEntity;
+import com.example.backend.dto.request.UserCreateRequest;
 import com.example.backend.dto.response.PageResponse;
 import com.example.backend.dto.response.PaginationResponse;
 import com.example.backend.dto.response.UserResponse;
@@ -17,6 +20,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserLogic userLogic;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Override
     public PageResponse<UserResponse> getAllUsers(int page, String search) throws Exception{
@@ -52,6 +58,22 @@ public class UserServiceImpl implements UserService {
                 .build()           
             )   
             .build();
+    }
+
+    @Override
+    public void createUser(UserCreateRequest request) {
+        
+        UserEntity newUser = UserEntity.builder()
+            .firstName(request.firstName())
+            .familyName(request.familyName())
+            .email(request.email())
+            .password(passwordEncoder.encode(request.password()))
+            .createdAt(DateUtil.now())
+            .updatedAt(DateUtil.now())
+            .role(request.role())
+            .build();
+
+        userLogic.saveUser(newUser);
     }
     
 }

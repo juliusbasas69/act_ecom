@@ -6,10 +6,11 @@ import { User } from '../../models/user.model';
 import { Pagination } from '../../../../shared/models/pagination.model';
 import { PaginationComponent } from '../../../../shared/components/pagination/pagination';
 import { debounceTime, distinctUntilChanged, Subject } from 'rxjs';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-user-list',
-  imports: [PaginationComponent],
+  imports: [PaginationComponent, RouterLink],
   templateUrl: './user-list.html',
   styleUrl: './user-list.css',
 })
