@@ -48,6 +48,7 @@ public class UserServiceImpl implements UserService {
                                 .familyName(user.getFamilyName())
                                 .email(user.getEmail())
                                 .createdAt(user.getCreatedAt())
+                                .updatedAt(user.getUpdatedAt())
                                 .role(user.getRole())
                                 .build();
                         } catch (Exception e) {

@@ -68,6 +68,7 @@
           <th class="px-6 py-3">USER</th>
           <th class="px-6 py-3">ROLE</th>
           <th class="px-6 py-3">CREATED</th>
+          <th class="px-6 py-3">UPDATED</th>
           <th class="px-6 py-3 text-center">ACTIONS</th>
         </tr>
       </thead>
@@ -107,7 +108,13 @@
               }
             </td>
 
-            <td class="px-6 py-4 text-sm text-slate-500">Jul 3, 2026</td>
+            <td class="px-6 py-4 text-sm text-slate-500">
+              {{ user.createdAt | date: 'MMM d, y' }}
+            </td>
+
+            <td class="px-6 py-4 text-sm text-slate-500">
+              {{ user.updatedAt | date: 'MMM d, y' }}
+            </td>
 
             <td class="px-6 py-4">
               <div class="flex justify-center gap-2">

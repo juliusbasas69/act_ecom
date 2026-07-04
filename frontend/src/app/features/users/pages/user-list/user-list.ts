@@ -11,7 +11,7 @@ import { FlashMessageService } from '../../../../shared/services/flash-message.s
 
 @Component({
   selector: 'app-user-list',
-  imports: [PaginationComponent, RouterLink],
+  imports: [PaginationComponent, RouterLink, DatePipe],
   templateUrl: './user-list.html',
   styleUrl: './user-list.css',
 })
