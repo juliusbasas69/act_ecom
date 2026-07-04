@@ -2,7 +2,7 @@ export interface UserRequest {
   firstName: string;
   familyName: string;
   email: string;
-  password: string;
-  confirmPassword: string;
+  password: string | null;
+  confirmPassword: string | null;
   role: string;
 }

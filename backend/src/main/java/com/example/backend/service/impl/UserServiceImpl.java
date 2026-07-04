@@ -117,7 +117,7 @@ public class UserServiceImpl implements UserService {
         userEntity.setFirstName(request.firstName());
         userEntity.setFamilyName(request.familyName());
         userEntity.setEmail(request.email());
-        if (!request.password().isBlank()) {
+        if (request.password() != null) {
             userEntity.setPassword(passwordEncoder.encode(request.password()));
         }
         userEntity.setUpdatedAt(DateUtil.now());
