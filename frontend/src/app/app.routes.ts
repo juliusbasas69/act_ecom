@@ -52,6 +52,22 @@ export const routes: Routes = [
           return import('./features/users/pages/user-edit/user-edit').then((m) => m.UserEdit);
         },
       },
+      {
+        path: 'products',
+        loadComponent: () => {
+          return import('./features/products/pages/product-list/product-list').then(
+            (m) => m.ProductList,
+          );
+        },
+      },
+      {
+        path: 'products/create',
+        loadComponent: () => {
+          return import('./features/products/pages/product-create/product-create').then(
+            (m) => m.ProductCreate,
+          );
+        },
+      },
     ],
   },
 ];

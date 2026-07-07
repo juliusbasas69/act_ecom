@@ -126,5 +126,21 @@ public class UserServiceImpl implements UserService {
 
         userLogic.saveUser(userEntity);
     }
+
+    @Override
+    public void deleteUser(String encryptedId) throws Exception {
+        
+        int id = Integer.parseInt(CipherUtil.decrypt(encryptedId));
+
+        Optional<UserEntity> user = userLogic.findUserById(id);
+
+        UserEntity userEntity = user.orElseThrow(() ->
+            new RuntimeException(MessageConstant.USER_NOT_FOUND)
+        );
+
+        userEntity.setDeleted(true);
+
+        userLogic.saveUser(userEntity);
+    }
     
 }

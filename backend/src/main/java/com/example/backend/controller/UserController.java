@@ -179,4 +179,23 @@ public class UserController {
                 .body(new ErrorResponse(UNEXPECTED_ERROR_MESSAGE));
         }
     }
+
+    @PostMapping("/delete/{encryptedId}")
+    public ResponseEntity<?> deleteUser(@PathVariable("encryptedId") String encryptedId){
+
+        try{
+
+            userService.deleteUser(encryptedId);
+
+            return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(new SuccessResponse(USER_DELETED_MESSAGE));
+
+        }catch(Exception e){
+            e.printStackTrace();
+            return ResponseEntity
+                .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(new ErrorResponse(UNEXPECTED_ERROR_MESSAGE));
+        }
+    }
 }

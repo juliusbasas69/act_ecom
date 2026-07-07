@@ -1,0 +1,100 @@
+<div class="mx-auto max-w-7xl p-6">
+  @if (successMessage()) {
+    <div
+      class="mb-6 flex items-center gap-4 rounded-2xl border border-emerald-200 bg-emerald-50 px-5 py-4 shadow-sm"
+    >
+      <!-- Icon -->
+      <div class="flex h-11 w-11 items-center justify-center rounded-full bg-emerald-100">
+        <i class="fa-solid fa-circle-check text-xl text-emerald-600"></i>
+      </div>
+
+      <!-- Message -->
+      <div class="flex-1">
+        <h3 class="text-sm font-semibold uppercase tracking-wide text-emerald-700">Success</h3>
+        <p class="mt-1 text-sm text-slate-600">
+          {{ successMessage() }}
+        </p>
+      </div>
+    </div>
+  }
+  <!-- Header -->
+  <div class="mb-6 flex items-center justify-between">
+    <div>
+      <h1 class="text-2xl font-bold text-slate-800">PRODUCTS</h1>
+      <p class="mt-1 text-sm text-slate-500">Manage registered products.</p>
+    </div>
+
+    <button
+      routerLink="/admin/products/create"
+      class="rounded-xl bg-sky-600 px-4 py-2.5 text-sm font-medium text-white transition hover:bg-sky-700 cursor-pointer"
+    >
+      + ADD PRODUCT
+    </button>
+  </div>
+
+  <!-- Search -->
+  <div class="mb-5">
+    <div class="relative max-w-md">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-slate-400"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M21 21l-4.35-4.35M16 10a6 6 0 11-12 0 6 6 0 0112 0z"
+        />
+      </svg>
+
+      <input
+        type="text"
+        placeholder="Search products..."
+        [value]="_search()"
+        (input)="onSearch($event)"
+        class="w-full rounded-xl border border-sky-200 bg-white py-2.5 pl-10 pr-4 text-sm outline-none transition focus:border-sky-500 focus:ring-2 focus:ring-sky-100"
+      />
+    </div>
+  </div>
+
+  <!-- Table -->
+  <div class="overflow-hidden rounded-2xl border border-sky-100 bg-white shadow-sm">
+    <table class="w-full">
+      <thead class="bg-sky-50">
+        <tr class="text-left text-sm font-semibold text-slate-700">
+          <th class="px-6 py-3">PRODUCT CODE</th>
+          <th class="px-6 py-3">PRODUCT NAME</th>
+          <th class="px-6 py-3">CATEGORY</th>
+          <th class="px-6 py-3">PRICE</th>
+          <th class="px-6 py-3">STOCK</th>
+          <th class="px-6 py-3">CREATED</th>
+          <th class="px-6 py-3">UPDATED</th>
+          <th class="px-6 py-3 text-center">ACTIONS</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-slate-100">
+        <tr class="hover:bg-sky-50 transition"></tr>
+      </tbody>
+    </table>
+    <!-- @if (_pagination(); as page) {
+      <app-pagination [pagination]="page" (pageChange)="loadUsers($event)" [label]="'users'" />
+    }
+    <app-confirmation-modal
+      [visible]="showDeleteModal()"
+      title="Delete User"
+      [message]="
+        'Are you sure you want to delete ' +
+        selectedUser()?.firstName +
+        ' ' +
+        selectedUser()?.familyName +
+        '?'
+      "
+      confirmText="DELETE"
+      (confirm)="confirmDelete()"
+      (cancel)="closeDeleteModal()"
+    /> -->
+  </div>
+</div>

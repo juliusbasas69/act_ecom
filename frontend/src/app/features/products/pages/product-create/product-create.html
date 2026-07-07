@@ -1,0 +1,241 @@
+<div class="mx-auto max-w-7xl p-6">
+  <!-- Header -->
+  <div class="mb-6 flex items-center justify-between">
+    <div>
+      <h1 class="text-2xl font-bold text-slate-800">Create User</h1>
+      <p class="mt-1 text-sm text-slate-500">Add a new user to the system.</p>
+    </div>
+
+    <button
+      routerLink="/admin/products"
+      class="cursor-pointer rounded-xl border border-sky-200 bg-white px-4 py-2.5 text-sm font-medium text-sky-700 transition hover:bg-sky-50"
+    >
+      BACK
+    </button>
+  </div>
+
+  <!-- Content -->
+  <div class="grid gap-6 lg:grid-cols-3">
+    <!-- ================= LEFT : FORM ================= -->
+    <div class="lg:col-span-2">
+      <div class="rounded-2xl border border-sky-100 bg-white p-8 shadow-sm">
+        <form class="space-y-6" [formGroup]="productForm" (ngSubmit)="onSubmit()">
+          <!-- Name -->
+          <div class="grid gap-6 md:grid-cols-2">
+            <div>
+              <label class="mb-2 block text-sm font-medium uppercase tracking-wide text-slate-700">
+                Product Code
+              </label>
+
+              <input
+                type="text"
+                formControlName="productCode"
+                placeholder="Enter product code"
+                class="w-full rounded-xl border border-sky-200 bg-white px-4 py-3 text-sm outline-none transition focus:border-sky-500 focus:ring-2 focus:ring-sky-100"
+              />
+
+              <!-- @if (productForm.get('firstName')?.errors?.['server']; as errors) {
+                @for (error of errors; track error) {
+                  <p class="mt-1 text-sm text-red-600">
+                    {{ error }}
+                  </p>
+                }
+              } -->
+            </div>
+
+            <div>
+              <label class="mb-2 block text-sm font-medium uppercase tracking-wide text-slate-700">
+                Product Name
+              </label>
+
+              <input
+                type="text"
+                formControlName="productName"
+                placeholder="Enter product name"
+                class="w-full rounded-xl border border-sky-200 bg-white px-4 py-3 text-sm outline-none transition focus:border-sky-500 focus:ring-2 focus:ring-sky-100"
+              />
+            </div>
+          </div>
+
+          <!-- Email -->
+          <div>
+            <label class="mb-2 block text-sm font-medium uppercase tracking-wide text-slate-700">
+              Description
+            </label>
+
+            <textarea
+              rows="4"
+              formControlName="description"
+              placeholder="Enter product description"
+              class="w-full rounded-xl border border-sky-200 px-4 py-3 text-sm outline-none transition focus:border-sky-500 focus:ring-2 focus:ring-sky-100"
+            ></textarea>
+          </div>
+
+          <!-- Password -->
+          <div class="grid gap-6 md:grid-cols-2">
+            <div>
+              <label class="mb-2 block text-sm font-medium uppercase tracking-wide text-slate-700">
+                Price
+              </label>
+
+              <input
+                type="number"
+                formControlName="price"
+                placeholder="0.00"
+                class="w-full rounded-xl border border-sky-200 bg-white px-4 py-3 text-sm outline-none transition focus:border-sky-500 focus:ring-2 focus:ring-sky-100"
+              />
+            </div>
+
+            <div>
+              <label class="mb-2 block text-sm font-medium uppercase tracking-wide text-slate-700">
+                Stock Quantity
+              </label>
+
+              <input
+                type="number"
+                formControlName="stockQuantity"
+                placeholder="0"
+                class="w-full rounded-xl border border-sky-200 bg-white px-4 py-3 text-sm outline-none transition focus:border-sky-500 focus:ring-2 focus:ring-sky-100"
+              />
+            </div>
+          </div>
+
+          <div class="grid gap-6 md:grid-cols-2">
+            <div>
+              <label class="mb-2 block text-sm font-medium uppercase tracking-wide text-slate-700">
+                Category
+              </label>
+
+              <select
+                formControlName="category"
+                class="w-full rounded-xl border border-sky-200 bg-white px-4 py-3 text-sm outline-none transition focus:border-sky-500 focus:ring-2 focus:ring-sky-100"
+              >
+                <option value="">Select Category</option>
+                <option value="ELECTRONICS">Electronics</option>
+                <option value="FOOD">Food</option>
+                <option value="CLOTHING">Clothing</option>
+                <option value="OFFICE">Office Supplies</option>
+              </select>
+            </div>
+            <div>
+              <label class="mb-2 block text-sm font-medium uppercase tracking-wide text-slate-700">
+                STATUS
+              </label>
+
+              <select
+                formControlName="status"
+                class="w-full rounded-xl border border-sky-200 bg-white px-4 py-3 text-sm outline-none transition focus:border-sky-500 focus:ring-2 focus:ring-sky-100"
+              >
+                <option value="">Select Status</option>
+                <option value="ACTIVE">Active</option>
+                <option value="INACTIVE">Inactive</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Buttons -->
+          <div class="flex justify-end gap-3 border-t border-slate-100 pt-6">
+            <button
+              type="button"
+              routerLink="/admin/users"
+              class="cursor-pointer rounded-xl border border-slate-200 bg-white px-5 py-2.5 text-sm font-medium text-slate-700 transition hover:bg-slate-50"
+            >
+              CANCEL
+            </button>
+
+            <button
+              type="submit"
+              class="cursor-pointer rounded-xl bg-sky-600 px-6 py-2.5 text-sm font-medium text-white transition hover:bg-sky-700"
+            >
+              CREATE PRODUCT
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- ================= RIGHT : PREVIEW ================= -->
+    <div>
+      <div class="sticky top-6 rounded-2xl border border-sky-100 bg-white p-6 shadow-sm">
+        <h2 class="text-lg font-semibold text-slate-800">Product Overview</h2>
+
+        <p class="mt-1 text-sm text-slate-500">Preview the product information.</p>
+
+        <!-- Product Icon -->
+        <div class="mt-8 flex flex-col items-center">
+          <div
+            class="flex h-24 w-24 items-center justify-center rounded-full bg-sky-100 text-4xl text-sky-700"
+          >
+            📦
+          </div>
+
+          <h3 class="mt-5 text-xl font-semibold text-slate-800">
+            {{ productForm.value.productName || 'Product Name' }}
+          </h3>
+
+          <p class="mt-1 text-sm text-slate-500">
+            {{ productForm.value.productCode || 'Product Code' }}
+          </p>
+
+          <span class="mt-4 rounded-full bg-sky-100 px-3 py-1 text-xs font-semibold text-sky-700">
+            {{ productForm.value.status || 'Status' }}
+          </span>
+        </div>
+
+        <div class="my-6 border-t border-slate-100"></div>
+
+        <!-- Summary -->
+        <div class="space-y-4 text-sm">
+          <div class="flex justify-between">
+            <span class="text-slate-500">Product Code</span>
+            <span class="font-medium text-slate-800">
+              {{ productForm.value.productCode || '-' }}
+            </span>
+          </div>
+
+          <div class="flex justify-between">
+            <span class="text-slate-500">Product Name</span>
+            <span class="font-medium text-slate-800">
+              {{ productForm.value.productName || '-' }}
+            </span>
+          </div>
+
+          <div class="flex justify-between">
+            <span class="text-slate-500">Category</span>
+            <span class="font-medium text-slate-800">
+              {{ productForm.value.category || '-' }}
+            </span>
+          </div>
+
+          <div class="flex justify-between">
+            <span class="text-slate-500">Price</span>
+            <span class="font-medium text-slate-800">
+              {{ productForm.value.price || '-' }}
+            </span>
+          </div>
+
+          <div class="flex justify-between">
+            <span class="text-slate-500">Stock Quantity</span>
+            <span class="font-medium text-slate-800">
+              {{ productForm.value.stockQuantity || '-' }}
+            </span>
+          </div>
+
+          <div class="flex justify-between">
+            <span class="text-slate-500">Status</span>
+            <span class="font-medium text-slate-800">
+              {{ productForm.value.status || '-' }}
+            </span>
+          </div>
+
+          <div class="flex items-start justify-between">
+            <span class="text-slate-500">Description</span>
+            <span class="max-w-[180px] text-right font-medium text-slate-800">
+              {{ productForm.value.description || '-' }}
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
