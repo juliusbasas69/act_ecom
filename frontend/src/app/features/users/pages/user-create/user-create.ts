@@ -5,7 +5,7 @@ import { UserService } from '../../services/user.service';
 import { SuccessResponse } from '../../../../shared/models/success-response.model';
 import { UserRequest } from '../../models/user-request.model';
 import { FlashMessageService } from '../../../../shared/services/flash-message.service';
-import { UserFormService } from '../../../../shared/services/user-form.service';
+import { UserFormService } from '../../services/user-form.service';
 
 @Component({
   selector: 'app-user-create',

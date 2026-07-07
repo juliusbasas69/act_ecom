@@ -1,6 +1,5 @@
 package com.example.backend.controller;
 
-import com.example.backend.auth.services.AuthService;
 import static com.example.backend.common.constants.MessageConstant.*;
 
 import java.util.ArrayList;
@@ -11,20 +10,16 @@ import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.MethodArgumentNotValidException;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.backend.common.constants.MessageConstant;
@@ -37,19 +32,12 @@ import com.example.backend.dto.response.SuccessResponse;
 import com.example.backend.dto.response.UserResponse;
 import com.example.backend.service.UserService;
 
-import jakarta.validation.Valid;
-
 @RestController
 @RequestMapping("/users")
 public class UserController {
 
-    private final AuthService authService;
     @Autowired
     private UserService userService;
-
-    UserController(AuthService authService) {
-        this.authService = authService;
-    }
 
     @GetMapping("/test")
     public String test(){

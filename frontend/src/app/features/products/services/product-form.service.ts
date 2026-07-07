@@ -13,9 +13,9 @@ export class ProductFormService {
       productName: [''],
       description: [''],
       category: [''],
-      price: [null],
-      stockQuantity: [null],
-      status: [],
+      price: [0],
+      quantity: [0],
+      status: [''],
     });
   }
 }

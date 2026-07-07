@@ -5,7 +5,7 @@ import { UserService } from '../../services/user.service';
 import { FlashMessageService } from '../../../../shared/services/flash-message.service';
 import { SuccessResponse } from '../../../../shared/models/success-response.model';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { UserFormService } from '../../../../shared/services/user-form.service';
+import { UserFormService } from '../../services/user-form.service';
 import { UserResponse } from '../../models/user-response.model';
 
 @Component({
