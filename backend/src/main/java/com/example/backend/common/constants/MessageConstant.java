@@ -1,17 +1,17 @@
 package com.example.backend.common.constants;
 
 public class MessageConstant {
-    
-    public static final String USER_NOT_FOUND = "User not found";
-	
+    	
 	public static final String INVALID_CREDENTIALS = "Invalid email or password";
 
     public static final String UNEXPECTED_ERROR_MESSAGE = "An unexpected error occurred.";
 
+
+    //User
+    public static final String USER_NOT_FOUND = "User not found";
     public static final String USER_CREATED_MESSAGE = "User created successfully.";
     public static final String USER_UPDATED_MESSAGE = "User updated successfully.";
     public static final String USER_DELETED_MESSAGE = "User deleted successfully.";
-
     public static final String FIRST_NAME_REQUIRED = "First name is required.";
     public static final String FIRST_NAME_MAX_LENGTH = "First name must not exceed 12 characters.";
     public static final String FAMILY_NAME_REQUIRED = "Family name is required.";
@@ -27,4 +27,21 @@ public class MessageConstant {
     public static final String CONFIRM_PASSWORD_REQUIRED = "Confirm password is required.";
     public static final String CONFIRM_PASSWORD_MAX_LENGTH = "Confirm password must not exceed 16 characters.";
     public static final String ROLE_REQUIRED = "Role is required.";
+
+    //Product
+    public static final String PRODUCT_NOT_FOUND = "Product not found.";
+    public static final String PRODUCT_CREATED_MESSAGE = "Product created successfully.";
+    public static final String PRODUCT_UPDATED_MESSAGE = "Product updated successfully.";
+    public static final String PRODUCT_DELETED_MESSAGE = "Product deleted successfully.";
+    public static final String PRODUCT_CODE_REQUIRED = "Product code is required.";
+    public static final String PRODUCT_CODE_MAX_LENGTH = "Product code must not exceed 50 characters.";
+    public static final String PRODUCT_NAME_REQUIRED = "Product name is required.";
+    public static final String PRODUCT_NAME_MAX_LENGTH = "Product name must not exceed 150 characters.";
+    public static final String PRODUCT_DESCRIPTION_MAX_LENGTH = "Description must not exceed 500 characters.";
+    public static final String PRODUCT_PRICE_REQUIRED = "Price is required.";
+    public static final String PRODUCT_PRICE_INVALID = "Price must be greater than 0.";
+    public static final String PRODUCT_STOCK_QUANTITY_REQUIRED = "Stock quantity is required.";
+    public static final String PRODUCT_STOCK_QUANTITY_INVALID = "Stock quantity cannot be negative.";
+    public static final String PRODUCT_CATEGORY_REQUIRED = "Category is required.";
+    public static final String PRODUCT_STATUS_REQUIRED = "Status is required.";
 }

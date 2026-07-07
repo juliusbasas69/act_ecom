@@ -16,4 +16,6 @@ public interface UserService {
     public UserResponse findUserById(String encryptedId)  throws Exception;
 
     public void editUser(String encryptedId, UserRequest request)  throws Exception;
+
+    public void deleteUser(String encryptedId) throws Exception;
 }

@@ -22,6 +22,8 @@ public class JwtServiceImpl implements JwtService{
 
     //1 Hour po
     private static final long EXPIRATION_TIME = 1000 * 60 * 60;
+    //private static final long EXPIRATION_TIME = 1000 * 60;
+    //private static final long EXPIRATION_TIME = 1000 * 10;
 
     private Key getSigningKey(){
         return Keys.hmacShaKeyFor(SECRET_KEY.getBytes());
@@ -34,6 +36,7 @@ public class JwtServiceImpl implements JwtService{
             .setSubject(String.valueOf(user.getId()))
             .claim("email", user.getEmail())
             .claim("role", user.getRole())
+            .claim("fullName", user.getFirstName() + " " + user.getFamilyName())
             .setIssuedAt(new Date(System.currentTimeMillis()))
             .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
             .signWith(getSigningKey(), SignatureAlgorithm.HS256)

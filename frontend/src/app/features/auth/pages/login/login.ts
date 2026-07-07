@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, computed, inject, OnInit, signal } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../auth.service';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
@@ -16,6 +16,11 @@ export class Login {
   private authService = inject(AuthService);
   private router = inject(Router);
 
+  private auth = inject(AuthService);
+  _isValid = signal(true);
+
+  sessionExpired = computed(() => this.auth.logoutReason() === 'expired');
+
   loginForm = this.fb.group({
     email: [''],
     password: [''],
@@ -28,6 +33,7 @@ export class Login {
     this.authService.login(request).subscribe({
       next: (response: AuthResponse) => {
         console.log('This is role: ' + response.role);
+        console.log(response);
         switch (response.role) {
           case 'ADMIN':
             this.router.navigate(['/admin/dashboard']);
@@ -45,9 +51,9 @@ export class Login {
       error: (err: HttpErrorResponse) => {
         console.log(err);
 
-        console.log(err.status); // HTTP status (e.g. 401)
-        console.log(err.message); // Error message
-        console.log(err.error); // Response body from your backend
+        if (err.status === 401) {
+          this._isValid.set(false);
+        }
       },
     });
   }

@@ -12,12 +12,22 @@ export class AuthService {
   private readonly http = inject(HttpClient);
   private readonly apiUrl = `${environment.apiUrl}/auth`;
   private readonly tokenKey = 'token';
+  private readonly _logoutReason = signal<string | null>(null);
+  readonly logoutReason = computed(() => this._logoutReason());
 
   readonly _currentUserToken = signal<string | null>(localStorage.getItem(this.tokenKey));
 
-  readonly isLoggedIn = computed(() => this._currentUserToken() !== null);
+  readonly isLoggedIn = computed(() => {
+    const token = this._currentUserToken();
 
-  readonly role = computed(() => {
+    if (!token) return false;
+
+    const expired = this.isTokenExpired();
+
+    return !expired;
+  });
+
+  readonly payload = computed(() => {
     const token = this._currentUserToken();
 
     if (!token) {
@@ -25,12 +35,15 @@ export class AuthService {
     }
 
     try {
-      const payload = JSON.parse(atob(token.split('.')[1]));
-      return payload.role as string | null;
+      return JSON.parse(atob(token.split('.')[1]));
     } catch {
       return null;
     }
   });
+
+  readonly role = computed(() => this.payload()?.role ?? null);
+  readonly fullName = computed(() => this.payload()?.fullName ?? null);
+  readonly email = computed(() => this.payload()?.email ?? null);
 
   login(request: LoginRequest): Observable<AuthResponse> {
     console.log('YAWA');
@@ -39,16 +52,33 @@ export class AuthService {
       .pipe(tap((response) => this.handleAuthSuccess(response.token)));
   }
 
-  logout(): void {
+  logout(reason: string | null = null): void {
     localStorage.removeItem(this.tokenKey);
     this._currentUserToken.set(null);
+
+    this._logoutReason.set(reason);
   }
 
   private handleAuthSuccess(token: string): void {
     localStorage.setItem(this.tokenKey, token);
     this._currentUserToken.set(token);
 
-    console.log(this.role()); // Should print USER
-    console.log(this.isLoggedIn()); // Should print true
+    console.log(this.role());
+    console.log(this.fullName());
+    console.log(this.email());
+    console.log(this.isLoggedIn());
+  }
+
+  isTokenExpired(): boolean {
+    const token = this._currentUserToken();
+
+    if (!token) return true;
+
+    try {
+      const payload = JSON.parse(atob(token.split('.')[1]));
+      return Date.now() >= payload.exp * 1000;
+    } catch {
+      return true;
+    }
   }
 }

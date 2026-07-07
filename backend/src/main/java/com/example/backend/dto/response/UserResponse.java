@@ -11,6 +11,7 @@ public record UserResponse(
     String familyName,
     String email,
     Timestamp createdAt,
+    Timestamp updatedAt,
     String role
 ) {
 }

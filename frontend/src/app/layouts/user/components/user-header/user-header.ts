@@ -19,7 +19,7 @@ export class UserHeader {
   }
 
   onLogout() {
-    this.authService.logout();
+    this.authService.logout('manual');
     this.router.navigate(['/login']);
   }
 }

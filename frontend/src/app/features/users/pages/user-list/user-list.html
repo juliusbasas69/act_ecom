@@ -20,7 +20,7 @@
   <!-- Header -->
   <div class="mb-6 flex items-center justify-between">
     <div>
-      <h1 class="text-2xl font-bold text-slate-800">Users</h1>
+      <h1 class="text-2xl font-bold text-slate-800">USERS</h1>
       <p class="mt-1 text-sm text-slate-500">Manage registered users.</p>
     </div>
 
@@ -68,6 +68,7 @@
           <th class="px-6 py-3">USER</th>
           <th class="px-6 py-3">ROLE</th>
           <th class="px-6 py-3">CREATED</th>
+          <th class="px-6 py-3">UPDATED</th>
           <th class="px-6 py-3 text-center">ACTIONS</th>
         </tr>
       </thead>
@@ -79,7 +80,8 @@
                 <div
                   class="flex h-11 w-11 items-center justify-center rounded-full bg-sky-100 font-semibold text-sky-700"
                 >
-                  {{ user.firstName.charAt(0).toUpperCase() }}
+                  {{ user.firstName.charAt(0).toUpperCase()
+                  }}{{ user.familyName.charAt(0).toUpperCase() }}
                 </div>
 
                 <div>
@@ -107,7 +109,13 @@
               }
             </td>
 
-            <td class="px-6 py-4 text-sm text-slate-500">Jul 3, 2026</td>
+            <td class="px-6 py-4 text-sm text-slate-500">
+              {{ user.createdAt | date: 'MMM d, y' }}
+            </td>
+
+            <td class="px-6 py-4 text-sm text-slate-500">
+              {{ user.updatedAt | date: 'MMM d, y' }}
+            </td>
 
             <td class="px-6 py-4">
               <div class="flex justify-center gap-2">
@@ -130,6 +138,7 @@
 
                 <!-- Delete -->
                 <button
+                  (click)="openDeleteModal(user)"
                   class="rounded-lg bg-red-50 p-2 text-red-600 transition hover:bg-red-100 cursor-pointer"
                   title="Delete"
                 >
@@ -144,5 +153,19 @@
     @if (_pagination(); as page) {
       <app-pagination [pagination]="page" (pageChange)="loadUsers($event)" [label]="'users'" />
     }
+    <app-confirmation-modal
+      [visible]="showDeleteModal()"
+      title="Delete User"
+      [message]="
+        'Are you sure you want to delete ' +
+        selectedUser()?.firstName +
+        ' ' +
+        selectedUser()?.familyName +
+        '?'
+      "
+      confirmText="DELETE"
+      (confirm)="confirmDelete()"
+      (cancel)="closeDeleteModal()"
+    />
   </div>
 </div>

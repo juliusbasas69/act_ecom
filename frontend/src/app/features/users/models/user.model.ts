@@ -4,5 +4,6 @@ export interface User {
   familyName: string;
   email: string;
   createdAt: string;
+  updatedAt: string;
   role: string;
 }

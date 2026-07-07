@@ -6,33 +6,31 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
-import org.springframework.web.bind.MethodArgumentNotValidException;
-import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.backend.common.constants.MessageConstant;
+import com.example.backend.common.validations.CreateValidation;
+import com.example.backend.common.validations.EditValidation;
 import com.example.backend.dto.request.UserRequest;
 import com.example.backend.dto.response.ErrorResponse;
 import com.example.backend.dto.response.PageResponse;
 import com.example.backend.dto.response.SuccessResponse;
 import com.example.backend.dto.response.UserResponse;
 import com.example.backend.service.UserService;
-
-import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/users")
@@ -70,7 +68,7 @@ public class UserController {
 
     @PostMapping("/create")
     public ResponseEntity<?> createUser(
-        @Valid @RequestBody UserRequest request, 
+        @Validated(CreateValidation.class) @RequestBody UserRequest request, 
         BindingResult bindingResult
     ){
 
@@ -130,7 +128,7 @@ public class UserController {
     @PostMapping("/edit/{encryptedId}")
     public ResponseEntity<?> editUser(
         @PathVariable("encryptedId") String encryptedId,
-        @Valid @RequestBody UserRequest request,
+        @Validated(EditValidation.class) @RequestBody UserRequest request,
         BindingResult bindingResult
     ){
 
@@ -144,9 +142,11 @@ public class UserController {
             }
             
             //This is to check password and confirm password temporarily
-            if (!request.password().equals(request.confirmPassword())) {
-                errors.computeIfAbsent("password", key -> new ArrayList<>())
-                    .add(MessageConstant.PASSWORDS_DO_NOT_MATCH);
+            if (request.password() != null || request.confirmPassword() != null) {
+                if (!Objects.equals(request.password(), request.confirmPassword())) {
+                    errors.computeIfAbsent("password", key -> new ArrayList<>())
+                        .add(MessageConstant.PASSWORDS_DO_NOT_MATCH);
+                }
             }
 
             return ResponseEntity.badRequest().body(errors);
@@ -154,9 +154,30 @@ public class UserController {
 
         try{
 
+            userService.editUser(encryptedId, request);
+
             return ResponseEntity
                 .status(HttpStatus.OK)
-                .body("AS");
+                .body(new SuccessResponse(USER_UPDATED_MESSAGE));
+
+        }catch(Exception e){
+            e.printStackTrace();
+            return ResponseEntity
+                .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(new ErrorResponse(UNEXPECTED_ERROR_MESSAGE));
+        }
+    }
+
+    @PostMapping("/delete/{encryptedId}")
+    public ResponseEntity<?> deleteUser(@PathVariable("encryptedId") String encryptedId){
+
+        try{
+
+            userService.deleteUser(encryptedId);
+
+            return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(new SuccessResponse(USER_DELETED_MESSAGE));
 
         }catch(Exception e){
             e.printStackTrace();

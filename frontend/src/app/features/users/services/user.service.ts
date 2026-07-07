@@ -43,4 +43,26 @@ export class UserService {
       headers: { Authorization: `Bearer ${token}` },
     });
   }
+
+  edit(encryptedId: string | null, request: UserRequest): Observable<SuccessResponse> {
+    const token = StorageUtil.getToken();
+    const api = `${this.apiUrl}/edit/${encryptedId}`;
+
+    return this.http.post<SuccessResponse>(api, request, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+  }
+
+  delete(encryptedId: string | null): Observable<SuccessResponse> {
+    const token = StorageUtil.getToken();
+    const api = `${this.apiUrl}/delete/${encryptedId}`;
+    console.log('THIS IS API: ' + api);
+    return this.http.post<SuccessResponse>(
+      api,
+      {},
+      {
+        headers: { Authorization: `Bearer ${token}` },
+      },
+    );
+  }
 }

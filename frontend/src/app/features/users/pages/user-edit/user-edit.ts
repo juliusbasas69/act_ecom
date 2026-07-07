@@ -5,7 +5,7 @@ import { UserService } from '../../services/user.service';
 import { FlashMessageService } from '../../../../shared/services/flash-message.service';
 import { SuccessResponse } from '../../../../shared/models/success-response.model';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { UserFormService } from '../../../../shared/services/user-form.service';
+import { UserFormService } from '../../services/user-form.service';
 import { UserResponse } from '../../models/user-response.model';
 
 @Component({
@@ -21,17 +21,18 @@ export class UserEdit implements OnInit {
   private flashMessageService = inject(FlashMessageService);
   private userFormService = inject(UserFormService);
 
+  encryptedId: string | null = null;
   _user = signal<UserResponse | null>(null);
   userForm = this.userFormService.createForm();
 
   ngOnInit(): void {
-    const encryptedId = this.route.snapshot.paramMap.get('encryptedId');
+    this.encryptedId = this.route.snapshot.paramMap.get('encryptedId');
 
-    if (!encryptedId) {
+    if (!this.encryptedId) {
       return;
     }
 
-    this.userService.findUserById(encryptedId).subscribe({
+    this.userService.findUserById(this.encryptedId).subscribe({
       next: (response) => {
         console.log(response);
         this.userForm.patchValue(response);
@@ -42,7 +43,15 @@ export class UserEdit implements OnInit {
   onSubmit(): void {
     const request = this.userForm.getRawValue() as UserRequest;
 
-    this.userService.create(request).subscribe({
+    if (request.password === '') {
+      request.password = null;
+    }
+
+    if (request.confirmPassword === '') {
+      request.confirmPassword = null;
+    }
+
+    this.userService.edit(this.encryptedId, request).subscribe({
       next: (response: SuccessResponse) => {
         console.log(response.message);
 

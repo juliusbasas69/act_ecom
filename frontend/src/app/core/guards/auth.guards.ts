@@ -6,11 +6,12 @@ export const loginGuard: CanActivateFn = () => {
   const auth = inject(AuthService);
   const router = inject(Router);
 
+  // User is NOT logged in -> allow access to login page
   if (!auth.isLoggedIn()) {
     return true;
   }
 
-  // Redirect based on role
+  // User IS logged in -> redirect away from login page
   switch (auth.role()) {
     case 'ADMIN':
       return router.createUrlTree(['/admin/dashboard']);
@@ -19,7 +20,8 @@ export const loginGuard: CanActivateFn = () => {
       return router.createUrlTree(['/dashboard']);
 
     default:
-      return router.createUrlTree(['/']);
+      auth.logout();
+      return router.createUrlTree(['/login']);
   }
 };
 
@@ -27,12 +29,23 @@ export const adminGuard: CanActivateFn = () => {
   const auth = inject(AuthService);
   const router = inject(Router);
 
+  if (auth.isTokenExpired()) {
+    auth.logout('expired');
+    console.log('OKY');
+    return router.createUrlTree(['/login']);
+  }
+
   return auth.role() === 'ADMIN' ? true : router.createUrlTree(['/login']);
 };
 
 export const userGuard: CanActivateFn = () => {
   const auth = inject(AuthService);
   const router = inject(Router);
+
+  if (auth.isTokenExpired()) {
+    auth.logout('expired');
+    return router.createUrlTree(['/login']);
+  }
 
   return auth.role() === 'USER' ? true : router.createUrlTree(['/login']);
 };

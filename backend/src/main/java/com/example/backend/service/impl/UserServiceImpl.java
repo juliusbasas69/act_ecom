@@ -48,6 +48,7 @@ public class UserServiceImpl implements UserService {
                                 .familyName(user.getFamilyName())
                                 .email(user.getEmail())
                                 .createdAt(user.getCreatedAt())
+                                .updatedAt(user.getUpdatedAt())
                                 .role(user.getRole())
                                 .build();
                         } catch (Exception e) {
@@ -117,11 +118,27 @@ public class UserServiceImpl implements UserService {
         userEntity.setFirstName(request.firstName());
         userEntity.setFamilyName(request.familyName());
         userEntity.setEmail(request.email());
-        if (!request.password().isBlank()) {
+        if (request.password() != null) {
             userEntity.setPassword(passwordEncoder.encode(request.password()));
         }
         userEntity.setUpdatedAt(DateUtil.now());
         userEntity.setRole(request.role());
+
+        userLogic.saveUser(userEntity);
+    }
+
+    @Override
+    public void deleteUser(String encryptedId) throws Exception {
+        
+        int id = Integer.parseInt(CipherUtil.decrypt(encryptedId));
+
+        Optional<UserEntity> user = userLogic.findUserById(id);
+
+        UserEntity userEntity = user.orElseThrow(() ->
+            new RuntimeException(MessageConstant.USER_NOT_FOUND)
+        );
+
+        userEntity.setDeleted(true);
 
         userLogic.saveUser(userEntity);
     }
