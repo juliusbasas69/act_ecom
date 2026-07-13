@@ -1,14 +1,17 @@
+import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-confirmation-modal',
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './confirmation-modal.html',
   styleUrl: './confirmation-modal.css',
 })
 export class ConfirmationModal {
   @Input() visible = false;
   @Input() title = 'Confirm';
+  @Input() highlighted = '';
+  @Input() highlightedIcon = '';
   @Input() message = '';
   @Input() confirmText = 'CONFIRM';
   @Input() cancelText = 'CANCEL';

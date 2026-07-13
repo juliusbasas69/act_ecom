@@ -24,8 +24,6 @@ export class CategoryCreate {
   onSubmit(): void {
     const request = this.categoryForm.getRawValue() as CategoryRequest;
 
-    console.log('Form Request:', request);
-
     this.categoryService.create(request).subscribe({
       next: (response: SuccessResponse) => {
         console.log(response.message);
