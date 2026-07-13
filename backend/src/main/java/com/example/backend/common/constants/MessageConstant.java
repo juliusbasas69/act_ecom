@@ -51,11 +51,14 @@ public class MessageConstant {
     public static final String CATEGORY_UPDATED_MESSAGE = "Category updated successfully.";
     public static final String CATEGORY_DELETED_MESSAGE = "Category deleted successfully.";
     public static final String CATEGORY_CODE_REQUIRED = "Category code is required.";
-    public static final String CATEGORY_CODE_MAX_LENGTH = "Category code must not exceed 6 characters.";
+    public static final String CATEGORY_CODE_MAX_LENGTH = "Category code must not exceed 32 characters.";
     public static final String CATEGORY_NAME_REQUIRED = "Category name is required.";
     public static final String CATEGORY_NAME_MAX_LENGTH = "Category name must not exceed 32 characters.";
     public static final String CATEGORY_STATUS_REQUIRED = "Status is required.";
     public static final String CATEGORY_CODE_ALREADY_EXISTS = "Category code already exists.";
     public static final String CATEGORY_NAME_ALREADY_EXISTS = "Category name already exists.";
     public static final String CATEGORY_STATUS_INVALID = "Status must be either ACTIVE or INACTIVE.";
+    public static final String COLOR_REQUIRED = "Color is required.";
+    public static final String CATEGORY_DESCRIPTION_MAX_LENGTH = "Description must not exceed 255 characters.";
+    public static final String CATEGORY_DESCRIPTION_REQUIRED = "Description is required.";
 }

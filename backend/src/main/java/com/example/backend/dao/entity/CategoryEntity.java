@@ -28,7 +28,7 @@ public class CategoryEntity {
     @Column(
         name = "category_code",
         nullable = false,
-        length = 6)
+        length = 32)
     private String categoryCode;
 
     @Column(
@@ -38,8 +38,18 @@ public class CategoryEntity {
     private String categoryName;
 
     @Column(
+        name = "description",
+        length = 255)
+    private String description;
+
+    @Column(
         nullable = false)
     private String status;
+
+    @Column(
+        name = "color",
+        nullable = false)
+    private String color;
 
     @Column(
         name = "created_at", 

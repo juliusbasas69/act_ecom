@@ -1,21 +1,10 @@
 package com.example.backend.controller;
 
-import static com.example.backend.common.constants.MessageConstant.CATEGORY_CREATED_MESSAGE;
-import static com.example.backend.common.constants.MessageConstant.CATEGORY_DELETED_MESSAGE;
-import static com.example.backend.common.constants.MessageConstant.CATEGORY_UPDATED_MESSAGE;
-import static com.example.backend.common.constants.MessageConstant.PRODUCT_CREATED_MESSAGE;
-import static com.example.backend.common.constants.MessageConstant.UNEXPECTED_ERROR_MESSAGE;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import static com.example.backend.common.constants.MessageConstant.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -35,7 +24,7 @@ import com.example.backend.dto.response.SuccessResponse;
 import com.example.backend.service.CategoryService;
 
 @RestController
-@RequestMapping("/category")
+@RequestMapping("/categories")
 public class CategoryController {
     
     @Autowired
@@ -105,8 +94,8 @@ public class CategoryController {
         }
     }
 
-    @PostMapping("/create/{encryptedId}")
-    public ResponseEntity<?> createCategory(
+    @PostMapping("/edit/{encryptedId}")
+    public ResponseEntity<?> editCategory(
         @PathVariable("encryptedId") String encryptedId,
         @Validated(EditValidation.class) @RequestBody CategoryRequest request
 
@@ -128,8 +117,8 @@ public class CategoryController {
         }
     }
 
-    @PostMapping("/edit/{encryptedId}")
-    public ResponseEntity<?> editCategory(
+    @PostMapping("/delete/{encryptedId}")
+    public ResponseEntity<?> deleteCategory(
         @PathVariable("encryptedId") String encryptedId
     ){
 
@@ -146,7 +135,7 @@ public class CategoryController {
 
             return ResponseEntity
                 .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .body(new ErrorResponse(UNEXPECTED_ERROR_MESSAGE));
+                .body(new ErrorResponse(UNEXPECTED_ERROR_MESSAGE)); 
         }
     }
 }

@@ -76,6 +76,30 @@ export const routes: Routes = [
           );
         },
       },
+      {
+        path: 'categories',
+        loadComponent: () => {
+          return import('./features/categories/pages/category-list/category-list').then(
+            (m) => m.CategoryList,
+          );
+        },
+      },
+      {
+        path: 'categories/create',
+        loadComponent: () => {
+          return import('./features/categories/pages/category-create/category-create').then(
+            (m) => m.CategoryCreate,
+          );
+        },
+      },
+      {
+        path: 'categories/edit/:encryptedId',
+        loadComponent: () => {
+          return import('./features/categories/pages/category-edit/category-edit').then(
+            (m) => m.CategoryEdit,
+          );
+        },
+      },
     ],
   },
 ];

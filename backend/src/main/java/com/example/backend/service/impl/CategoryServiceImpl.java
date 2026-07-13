@@ -42,7 +42,9 @@ public class CategoryServiceImpl implements CategoryService {
                                 .encryptedId(CipherUtil.encrypt(String.valueOf(category.getId())))
                                 .categoryCode(category.getCategoryCode())
                                 .categoryName(category.getCategoryName())
+                                .description(category.getDescription())
                                 .status(category.getStatus())
+                                .color(category.getColor())
                                 .createdAt(category.getCreatedAt())
                                 .updatedAt(category.getUpdatedAt())
                                 .build();
@@ -69,7 +71,9 @@ public class CategoryServiceImpl implements CategoryService {
         CategoryEntity newCategory = CategoryEntity.builder()
             .categoryCode(request.categoryCode())
             .categoryName(request.categoryName())
+            .description(request.description())
             .status(request.status())
+            .color(request.color())
             .createdAt(DateUtil.now())
             .updatedAt(DateUtil.now())
             .isDeleted(IS_NOT_DELETED)
@@ -93,6 +97,8 @@ public class CategoryServiceImpl implements CategoryService {
             .encryptedId(encryptedId)
             .categoryCode(categoryEntity.getCategoryCode())
             .categoryName(categoryEntity.getCategoryName())
+            .description(categoryEntity.getDescription())
+            .color(categoryEntity.getColor())
             .status(categoryEntity.getStatus())
             .build();
         
@@ -111,7 +117,9 @@ public class CategoryServiceImpl implements CategoryService {
 
         categoryEntity.setCategoryCode(request.categoryCode());
         categoryEntity.setCategoryName(request.categoryName());
+        categoryEntity.setDescription(request.description());
         categoryEntity.setStatus(request.status());
+        categoryEntity.setColor(request.color());
         categoryEntity.setUpdatedAt(DateUtil.now());
 
         categoryLogic.saveCategory(categoryEntity);
@@ -133,7 +141,4 @@ public class CategoryServiceImpl implements CategoryService {
 
         categoryLogic.saveCategory(categoryEntity);
     }
-
-    
-    
 }

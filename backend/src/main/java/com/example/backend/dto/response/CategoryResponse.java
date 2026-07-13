@@ -9,7 +9,9 @@ public record CategoryResponse(
     String encryptedId,
     String categoryCode,
     String categoryName,
+    String description,
     String status,
+    String color,
     Timestamp createdAt,
     Timestamp updatedAt
 ) {
