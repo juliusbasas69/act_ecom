@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import com.example.backend.dto.request.ProductRequest;
 import com.example.backend.dto.response.PageResponse;
 import com.example.backend.dto.response.ProductResponse;
+
 @Service
 public interface ProductService {
 

@@ -1,10 +1,9 @@
 package com.example.backend.service.impl;
 
+import static com.example.backend.common.constants.CommonConstant.*;
 import static com.example.backend.common.constants.MessageConstant.*;
 
 import java.util.Optional;
-
-import javax.management.RuntimeErrorException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -92,7 +91,7 @@ public class UserServiceImpl implements UserService {
         Optional<UserEntity> user = userLogic.findUserById(id);
 
         UserEntity userEntity = user.orElseThrow(() -> 
-            new RuntimeException(PRODUCT_NOT_FOUND)
+            new RuntimeException(USER_NOT_FOUND)
         );
         
         return UserResponse.builder()
@@ -138,7 +137,8 @@ public class UserServiceImpl implements UserService {
             new RuntimeException(USER_NOT_FOUND)
         );
 
-        userEntity.setDeleted(true);
+        userEntity.setDeleted(IS_DELETED);
+        userEntity.setUpdatedAt(DateUtil.now());
 
         userLogic.saveUser(userEntity);
     }

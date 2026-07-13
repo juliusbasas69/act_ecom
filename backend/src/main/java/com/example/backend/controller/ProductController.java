@@ -42,40 +42,26 @@ public class ProductController {
 
     @GetMapping
     public ResponseEntity<PageResponse<ProductResponse>> getAllProducts(
-            @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "") String search) {
-                try{
+        @RequestParam(defaultValue = "0") int page,
+        @RequestParam(defaultValue = "") String search) {
+        try{
 
-                    PageResponse<ProductResponse> response = productService.getAllProducts(page, search);
+            PageResponse<ProductResponse> response = productService.getAllProducts(page, search);
 
-                    return ResponseEntity.ok(response);
+            return ResponseEntity.ok(response);
 
-                }catch(Exception e){
-                    e.printStackTrace();;
+        }catch(Exception e){
+            e.printStackTrace();;
 
-                    return ResponseEntity
-                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .build();
-                }
-                
-            }
+            return ResponseEntity
+            .status(HttpStatus.INTERNAL_SERVER_ERROR)
+            .build();
+        }
+    }
     
     @PostMapping("/create")
     public ResponseEntity<?> createProduct(
-        @Validated(CreateValidation.class) @RequestBody ProductRequest request,
-        BindingResult bindingResult){
-
-        if(bindingResult.hasErrors()){
-
-            Map<String, List<String>> errors = new HashMap<>();
-
-            for (FieldError error : bindingResult.getFieldErrors()) {
-                errors.computeIfAbsent(error.getField(), key -> new ArrayList<>())
-                    .add(error.getDefaultMessage());
-            }
-            
-            return ResponseEntity.badRequest().body(errors);
-        }
+        @Validated(CreateValidation.class) @RequestBody ProductRequest request){
 
         try{
 
@@ -116,20 +102,7 @@ public class ProductController {
     @PostMapping("/edit/{encryptedId}")
     public ResponseEntity<?> editProduct(
         @PathVariable("encryptedId") String encryptedId,
-        @Validated(EditValidation.class) @RequestBody ProductRequest request,
-        BindingResult bindingResult){
-
-        if(bindingResult.hasErrors()){
-
-            Map<String, List<String>> errors = new HashMap<>();
-
-            for (FieldError error : bindingResult.getFieldErrors()) {
-                errors.computeIfAbsent(error.getField(), key -> new ArrayList<>())
-                    .add(error.getDefaultMessage());
-            }
-            
-            return ResponseEntity.badRequest().body(errors);
-        }
+        @Validated(EditValidation.class) @RequestBody ProductRequest request){
 
         try{
 

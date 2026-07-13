@@ -4,12 +4,17 @@ import static com.example.backend.common.constants.MessageConstant.*;
 
 import com.example.backend.common.validations.CreateValidation;
 import com.example.backend.common.validations.EditValidation;
+import com.example.backend.common.validations.PasswordMatches;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
+@PasswordMatches(
+    groups={CreateValidation.class, EditValidation.class},
+    message = PASSWORDS_DO_NOT_MATCH
+)
 public record UserRequest(
     @NotBlank(
         message = FIRST_NAME_REQUIRED, 

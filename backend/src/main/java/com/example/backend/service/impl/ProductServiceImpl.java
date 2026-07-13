@@ -1,11 +1,7 @@
 package com.example.backend.service.impl;
 
-import com.example.backend.common.constants.CommonConstant.*;
-
-import static com.example.backend.common.constants.CommonConstant.IS_DELETED;
-import static com.example.backend.common.constants.CommonConstant.IS_NOT_DELETED;
-import static com.example.backend.common.constants.MessageConstant.PRODUCT_NOT_FOUND;
-import static com.example.backend.common.constants.MessageConstant.USER_NOT_FOUND;
+import static com.example.backend.common.constants.CommonConstant.*;
+import static com.example.backend.common.constants.MessageConstant.*;
 
 import java.util.Optional;
 
@@ -150,6 +146,7 @@ public class ProductServiceImpl implements ProductService{
         );
 
         productEntity.setIsDeleted(IS_DELETED);
+        productEntity.setUpdatedAt(DateUtil.now());
 
         productLogic.saveProduct(productEntity);
     }

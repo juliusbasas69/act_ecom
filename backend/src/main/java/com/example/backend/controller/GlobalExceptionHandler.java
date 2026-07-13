@@ -1,23 +1,29 @@
 package com.example.backend.controller;
 
-import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import org.springframework.web.context.request.WebRequest;
 
-
+@RestControllerAdvice
 public class GlobalExceptionHandler {
 
-	// @ExceptionHandler(Exception.class)
-    // public ResponseEntity<String> handleException(Exception ex) {
-    //     return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred: " + ex.getMessage());
-    // }
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<Map<String, List<String>>> handleValidation(
+            MethodArgumentNotValidException ex) {
+
+        Map<String, List<String>> errors = new HashMap<>();
+
+        ex.getBindingResult().getFieldErrors().forEach(error ->
+            errors.computeIfAbsent(error.getField(), key -> new ArrayList<>())
+                  .add(error.getDefaultMessage())
+        );
+
+        return ResponseEntity.badRequest().body(errors);
+    }
 }

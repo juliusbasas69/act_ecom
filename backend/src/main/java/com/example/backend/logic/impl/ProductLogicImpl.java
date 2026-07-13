@@ -22,7 +22,7 @@ public class ProductLogicImpl implements ProductLogic {
     @Value("${product.max.display}")
     private String PRODUCT_MAX_DISPLAY;
 
-      @Override
+    @Override
     public void saveProduct(ProductEntity product) {
         
         productDao.save(product);
