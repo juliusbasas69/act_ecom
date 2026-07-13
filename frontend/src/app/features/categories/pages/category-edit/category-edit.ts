@@ -7,10 +7,12 @@ import { CategoryRequest } from '../../models/category-request.model';
 import { SuccessResponse } from '../../../../shared/models/success-response.model';
 import { CategoryResponse } from '../../models/category-response.model';
 import { ReactiveFormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { CATEGORY_ICONS } from '../../../../shared/utils/icons.util';
 
 @Component({
   selector: 'app-category-edit',
-  imports: [RouterLink, ReactiveFormsModule],
+  imports: [RouterLink, ReactiveFormsModule, CommonModule],
   templateUrl: './category-edit.html',
   styleUrl: './category-edit.css',
 })
@@ -24,6 +26,9 @@ export class CategoryEdit implements OnInit {
   encryptedId: string | null = null;
   _category = signal<CategoryResponse | null>(null);
   categoryForm = this.categoryFormService.createForm();
+
+  icons = CATEGORY_ICONS;
+  search = '';
 
   ngOnInit(): void {
     this.encryptedId = this.route.snapshot.paramMap.get('encryptedId');
@@ -64,5 +69,17 @@ export class CategoryEdit implements OnInit {
         });
       },
     });
+  }
+
+  onSearch(event: Event): void {
+    this.search = (event.target as HTMLInputElement).value.toLowerCase();
+  }
+
+  get filteredIcons() {
+    return CATEGORY_ICONS.filter(
+      (icon) =>
+        icon.label.toLowerCase().includes(this.search.toLowerCase()) ||
+        icon.value.toLowerCase().includes(this.search.toLowerCase()),
+    );
   }
 }

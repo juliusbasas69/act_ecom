@@ -52,6 +52,11 @@ public class CategoryEntity {
     private String color;
 
     @Column(
+        name = "icon",
+        nullable = false)
+    private String icon;
+
+    @Column(
         name = "created_at", 
         nullable = false, 
         updatable = false)

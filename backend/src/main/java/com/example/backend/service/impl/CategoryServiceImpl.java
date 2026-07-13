@@ -45,6 +45,7 @@ public class CategoryServiceImpl implements CategoryService {
                                 .description(category.getDescription())
                                 .status(category.getStatus())
                                 .color(category.getColor())
+                                .icon(category.getIcon())
                                 .createdAt(category.getCreatedAt())
                                 .updatedAt(category.getUpdatedAt())
                                 .build();
@@ -74,6 +75,7 @@ public class CategoryServiceImpl implements CategoryService {
             .description(request.description())
             .status(request.status())
             .color(request.color())
+            .icon(request.icon())
             .createdAt(DateUtil.now())
             .updatedAt(DateUtil.now())
             .isDeleted(IS_NOT_DELETED)
@@ -100,6 +102,7 @@ public class CategoryServiceImpl implements CategoryService {
             .description(categoryEntity.getDescription())
             .color(categoryEntity.getColor())
             .status(categoryEntity.getStatus())
+            .icon(categoryEntity.getIcon())
             .build();
         
     }
@@ -120,6 +123,7 @@ public class CategoryServiceImpl implements CategoryService {
         categoryEntity.setDescription(request.description());
         categoryEntity.setStatus(request.status());
         categoryEntity.setColor(request.color());
+        categoryEntity.setIcon(request.icon());
         categoryEntity.setUpdatedAt(DateUtil.now());
 
         categoryLogic.saveCategory(categoryEntity);

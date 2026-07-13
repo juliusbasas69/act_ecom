@@ -6,10 +6,12 @@ import { SuccessResponse } from '../../../../shared/models/success-response.mode
 import { Router, RouterLink } from '@angular/router';
 import { FlashMessageService } from '../../../../shared/services/flash-message.service';
 import { CategoryRequest } from '../../models/category-request.model';
+import { CATEGORY_ICONS } from '../../../../shared/utils/icons.util';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-category-create',
-  imports: [RouterLink, ReactiveFormsModule],
+  imports: [RouterLink, ReactiveFormsModule, CommonModule],
   templateUrl: './category-create.html',
   styleUrl: './category-create.css',
 })
@@ -20,6 +22,9 @@ export class CategoryCreate {
   private flashMessageService = inject(FlashMessageService);
 
   categoryForm = this.categoryFormService.createForm();
+
+  icons = CATEGORY_ICONS;
+  search = '';
 
   onSubmit(): void {
     const request = this.categoryForm.getRawValue() as CategoryRequest;
@@ -45,5 +50,17 @@ export class CategoryCreate {
         });
       },
     });
+  }
+
+  onSearch(event: Event): void {
+    this.search = (event.target as HTMLInputElement).value.toLowerCase();
+  }
+
+  get filteredIcons() {
+    return CATEGORY_ICONS.filter(
+      (icon) =>
+        icon.label.toLowerCase().includes(this.search.toLowerCase()) ||
+        icon.value.toLowerCase().includes(this.search.toLowerCase()),
+    );
   }
 }

@@ -58,7 +58,8 @@ public class MessageConstant {
     public static final String CATEGORY_CODE_ALREADY_EXISTS = "Category code already exists.";
     public static final String CATEGORY_NAME_ALREADY_EXISTS = "Category name already exists.";
     public static final String CATEGORY_STATUS_INVALID = "Status must be either ACTIVE or INACTIVE.";
-    public static final String COLOR_REQUIRED = "Color is required.";
+    public static final String CATEGORY_COLOR_REQUIRED = "Color is required.";
+    public static final String CATEGORY_ICON_REQUIRED = "Icon is required.";
     public static final String CATEGORY_DESCRIPTION_MAX_LENGTH = "Description must not exceed 255 characters.";
     public static final String CATEGORY_DESCRIPTION_REQUIRED = "Description is required.";
 }

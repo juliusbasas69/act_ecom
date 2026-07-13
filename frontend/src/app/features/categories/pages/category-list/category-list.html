@@ -91,11 +91,11 @@
             <td class="px-6 py-4">
               <div class="flex items-center gap-4">
                 <div
-                  class="flex h-11 w-11 items-center justify-center rounded-full bg-sky-100 font-semibold text-sky-700"
+                  class="flex h-11 w-11 items-center justify-center rounded-full bg-sky-100"
                   [style.backgroundColor]="category.color"
                   [style.color]="getTextColor(category.color)"
                 >
-                  {{ category.categoryName.charAt(0).toUpperCase() }}
+                  <i class="fa-solid text-lg" [ngClass]="category.icon || 'fa-circle-question'"></i>
                 </div>
 
                 <div>

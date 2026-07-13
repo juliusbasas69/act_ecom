@@ -14,6 +14,7 @@ export class CategoryFormService {
       description: [''],
       color: [''],
       status: [''],
+      icon: ['fa-question'],
     });
   }
 }

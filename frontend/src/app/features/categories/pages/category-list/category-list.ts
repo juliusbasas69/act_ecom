@@ -1,7 +1,7 @@
 import { Component, inject, signal } from '@angular/core';
 import { PaginationComponent } from '../../../../shared/components/pagination/pagination';
 import { RouterLink } from '@angular/router';
-import { DatePipe } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { ConfirmationModal } from '../../../../shared/components/confirmation-modal/confirmation-modal';
 import { CategoryService } from '../../services/category.service';
 import { FlashMessageService } from '../../../../shared/services/flash-message.service';
@@ -12,7 +12,7 @@ import { Pagination } from '../../../../shared/models/pagination.model';
 
 @Component({
   selector: 'app-category-list',
-  imports: [PaginationComponent, RouterLink, DatePipe, ConfirmationModal],
+  imports: [PaginationComponent, RouterLink, DatePipe, ConfirmationModal, CommonModule],
   templateUrl: './category-list.html',
   styleUrl: './category-list.css',
 })
@@ -61,8 +61,8 @@ export class CategoryList {
     this.searchSubject.next(value);
   }
 
-  openDeleteModal(user: CategoryResponse): void {
-    this.selectedCategory.set(user);
+  openDeleteModal(category: CategoryResponse): void {
+    this.selectedCategory.set(category);
     this.showDeleteModal.set(true);
   }
 

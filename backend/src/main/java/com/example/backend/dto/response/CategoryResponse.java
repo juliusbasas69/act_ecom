@@ -12,6 +12,7 @@ public record CategoryResponse(
     String description,
     String status,
     String color,
+    String icon,
     Timestamp createdAt,
     Timestamp updatedAt
 ) {

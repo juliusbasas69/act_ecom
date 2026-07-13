@@ -1,14 +1,6 @@
 package com.example.backend.dto.request;
 
-import static com.example.backend.common.constants.MessageConstant.CATEGORY_CODE_MAX_LENGTH;
-import static com.example.backend.common.constants.MessageConstant.CATEGORY_CODE_REQUIRED;
-import static com.example.backend.common.constants.MessageConstant.CATEGORY_DESCRIPTION_MAX_LENGTH;
-import static com.example.backend.common.constants.MessageConstant.CATEGORY_DESCRIPTION_REQUIRED;
-import static com.example.backend.common.constants.MessageConstant.CATEGORY_NAME_MAX_LENGTH;
-import static com.example.backend.common.constants.MessageConstant.CATEGORY_NAME_REQUIRED;
-import static com.example.backend.common.constants.MessageConstant.CATEGORY_STATUS_INVALID;
-import static com.example.backend.common.constants.MessageConstant.CATEGORY_STATUS_REQUIRED;
-import static com.example.backend.common.constants.MessageConstant.COLOR_REQUIRED;
+import static com.example.backend.common.constants.MessageConstant.*;
 
 import com.example.backend.common.validations.CreateValidation;
 import com.example.backend.common.validations.EditValidation;
@@ -56,8 +48,13 @@ public record CategoryRequest(
     String status,
 
     @NotBlank(
-        message = COLOR_REQUIRED,
+        message = CATEGORY_COLOR_REQUIRED,
         groups = {CreateValidation.class, EditValidation.class})
-    String color
+    String color,
+
+    @NotBlank(
+        message = CATEGORY_ICON_REQUIRED,
+        groups = {CreateValidation.class, EditValidation.class})
+    String icon
 ) {   
 } 

@@ -19,6 +19,14 @@ export const routes: Routes = [
           );
         },
       },
+      {
+        path: 'products',
+        loadComponent: () => {
+          return import('./features/products/pages/user-screen/product-list/product-list').then(
+            (m) => m.ProductList,
+          );
+        },
+      },
     ],
   },
   {
