@@ -38,7 +38,7 @@ export class UserService {
   findUserById(encryptedId: string): Observable<UserResponse> {
     const token = StorageUtil.getToken();
     const api = `${this.apiUrl}/edit/${encryptedId}`;
-    console.log(api);
+
     return this.http.get<UserResponse>(api, {
       headers: { Authorization: `Bearer ${token}` },
     });

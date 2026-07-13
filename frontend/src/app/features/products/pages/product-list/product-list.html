@@ -62,39 +62,126 @@
 
   <!-- Table -->
   <div class="overflow-hidden rounded-2xl border border-sky-100 bg-white shadow-sm">
-    <table class="w-full">
-      <thead class="bg-sky-50">
-        <tr class="text-left text-sm font-semibold text-slate-700">
-          <th class="px-6 py-3">PRODUCT CODE</th>
-          <th class="px-6 py-3">PRODUCT NAME</th>
-          <th class="px-6 py-3">CATEGORY</th>
-          <th class="px-6 py-3">PRICE</th>
-          <th class="px-6 py-3">STOCK</th>
-          <th class="px-6 py-3">CREATED</th>
-          <th class="px-6 py-3">UPDATED</th>
-          <th class="px-6 py-3 text-center">ACTIONS</th>
-        </tr>
-      </thead>
-      <tbody class="divide-y divide-slate-100">
-        <tr class="hover:bg-sky-50 transition"></tr>
-      </tbody>
-    </table>
-    <!-- @if (_pagination(); as page) {
-      <app-pagination [pagination]="page" (pageChange)="loadUsers($event)" [label]="'users'" />
+    <div
+      class="thin-scrollbar overflow-x-auto rounded-2xl border border-sky-100 bg-white shadow-sm"
+    >
+      <table class="min-w-[1300px] table-fixed">
+        <thead class="bg-sky-50">
+          <tr class="text-left text-sm font-semibold text-slate-700">
+            <th class="w-52 px-6 py-3">PRODUCT CODE</th>
+            <th class="w-72 px-6 py-3">PRODUCT NAME</th>
+            <th class="w-40 px-6 py-3">CATEGORY</th>
+            <th class="w-36 px-6 py-3">PRICE</th>
+            <th class="w-28 px-6 py-3">STOCK</th>
+            <th class="w-56 px-6 py-3">CREATED</th>
+            <th class="w-56 px-6 py-3">UPDATED</th>
+            <th class="w-40 px-6 py-3 text-center">ACTIONS</th>
+          </tr>
+        </thead>
+
+        <tbody class="divide-y divide-slate-100">
+          @for (product of _products(); track product.encryptedId) {
+            <tr class="hover:bg-sky-50 transition">
+              <!-- Product Code -->
+              <td class="px-6 py-4 whitespace-nowrap">
+                {{ product.productCode }}
+              </td>
+
+              <!-- Product Name -->
+              <td class="px-6 py-4">
+                <div>
+                  <p class="font-medium text-slate-800 truncate">
+                    {{ product.productName }}
+                  </p>
+
+                  <p class="mt-1 text-xs text-slate-500 line-clamp-2" [title]="product.description">
+                    {{ product.description }}
+                  </p>
+                </div>
+              </td>
+
+              <!-- Category -->
+              <td class="px-6 py-4 whitespace-nowrap">
+                <span class="rounded-full bg-sky-100 px-3 py-1 text-xs font-medium text-sky-700">
+                  {{ product.category }}
+                </span>
+              </td>
+
+              <!-- Price -->
+              <td class="px-6 py-4 whitespace-nowrap font-medium text-emerald-600">
+                {{ product.price | currency: 'PHP' : 'symbol' : '1.2-2' }}
+              </td>
+
+              <!-- Stock -->
+              <td class="px-6 py-4 whitespace-nowrap">
+                {{ product.quantity }}
+              </td>
+
+              <!-- Created -->
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-600">
+                {{ product.createdAt | date: 'MMM d, y' }}
+              </td>
+
+              <!-- Updated -->
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-600">
+                {{ product.updatedAt | date: 'MMM d, y' }}
+              </td>
+
+              <!-- Actions -->
+              <td class="px-6 py-4">
+                <div class="flex justify-center gap-2">
+                  <!-- View -->
+                  <button
+                    class="rounded-lg bg-sky-50 p-2 text-sky-600 transition hover:bg-sky-100 cursor-pointer"
+                    title="View"
+                  >
+                    <i class="fa-solid fa-eye"></i>
+                  </button>
+
+                  <!-- Edit -->
+                  <button
+                    [routerLink]="['/admin/products/edit', product.encryptedId]"
+                    class="rounded-lg bg-amber-50 p-2 text-amber-600 transition hover:bg-amber-100 cursor-pointer"
+                    title="Edit"
+                  >
+                    <i class="fa-solid fa-pen-to-square"></i>
+                  </button>
+
+                  <!-- Delete -->
+                  <button
+                    (click)="openDeleteModal(product)"
+                    class="rounded-lg bg-red-50 p-2 text-red-600 transition hover:bg-red-100 cursor-pointer"
+                    title="Delete"
+                  >
+                    <i class="fa-solid fa-trash"></i>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+    @if (_pagination(); as page) {
+      <app-pagination
+        [pagination]="page"
+        (pageChange)="loadProducts($event)"
+        [label]="'products'"
+      />
     }
     <app-confirmation-modal
       [visible]="showDeleteModal()"
-      title="Delete User"
+      title="Delete Product"
       [message]="
         'Are you sure you want to delete ' +
-        selectedUser()?.firstName +
-        ' ' +
-        selectedUser()?.familyName +
+        selectProduct()?.productCode +
+        ' | ' +
+        selectProduct()?.productName +
         '?'
       "
       confirmText="DELETE"
       (confirm)="confirmDelete()"
       (cancel)="closeDeleteModal()"
-    /> -->
+    />
   </div>
 </div>

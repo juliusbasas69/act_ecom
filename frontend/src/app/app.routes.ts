@@ -68,6 +68,14 @@ export const routes: Routes = [
           );
         },
       },
+      {
+        path: 'products/edit/:encryptedId',
+        loadComponent() {
+          return import('./features/products/pages/product-edit/product-edit').then(
+            (m) => m.ProductEdit,
+          );
+        },
+      },
     ],
   },
 ];

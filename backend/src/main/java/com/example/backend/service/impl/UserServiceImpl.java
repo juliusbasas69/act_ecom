@@ -64,7 +64,7 @@ public class UserServiceImpl implements UserService {
                 .hasNext(users.hasNext())
                 .hasPrevious(users.hasPrevious())
                 .build()           
-            )   
+            )       
             .build();
     }
 
@@ -91,16 +91,16 @@ public class UserServiceImpl implements UserService {
 
         Optional<UserEntity> user = userLogic.findUserById(id);
 
-        if(!user.isPresent()){
-           throw new RuntimeException(USER_NOT_FOUND);
-        }
+        UserEntity userEntity = user.orElseThrow(() -> 
+            new RuntimeException(PRODUCT_NOT_FOUND)
+        );
         
         return UserResponse.builder()
             .encryptedId(encryptedId)
-            .firstName(user.get().getFirstName())
-            .familyName(user.get().getFamilyName())
-            .email(user.get().getEmail())
-            .role(user.get().getRole())
+            .firstName(userEntity.getFirstName())
+            .familyName(userEntity.getFamilyName())
+            .email(userEntity.getEmail())
+            .role(userEntity.getRole())
             .build();
     }
 
@@ -135,7 +135,7 @@ public class UserServiceImpl implements UserService {
         Optional<UserEntity> user = userLogic.findUserById(id);
 
         UserEntity userEntity = user.orElseThrow(() ->
-            new RuntimeException(MessageConstant.USER_NOT_FOUND)
+            new RuntimeException(USER_NOT_FOUND)
         );
 
         userEntity.setDeleted(true);

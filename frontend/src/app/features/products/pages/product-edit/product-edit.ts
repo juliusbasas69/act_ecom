@@ -1,30 +1,48 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
-import { Router, RouterLink } from '@angular/router';
+import { ProductService } from '../../services/product.service';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { FlashMessageService } from '../../../../shared/services/flash-message.service';
 import { ProductFormService } from '../../services/product-form.service';
 import { ProductRequest } from '../../models/product-request.mode';
-import { ProductService } from '../../services/product.service';
 import { SuccessResponse } from '../../../../shared/models/success-response.model';
+import { ProductResponse } from '../../models/product-response.model';
 
 @Component({
-  selector: 'app-product-create',
+  selector: 'app-product-edit',
   imports: [RouterLink, ReactiveFormsModule],
-  templateUrl: './product-create.html',
-  styleUrl: './product-create.css',
+  templateUrl: './product-edit.html',
+  styleUrl: './product-edit.css',
 })
-export class ProductCreate {
+export class ProductEdit implements OnInit {
   private productService = inject(ProductService);
   private router = inject(Router);
+  private readonly route = inject(ActivatedRoute);
   private flashMessageService = inject(FlashMessageService);
   private productFormService = inject(ProductFormService);
 
+  encryptedId: string | null = null;
+  _product = signal<ProductResponse | null>(null);
   productForm = this.productFormService.createForm();
+
+  ngOnInit(): void {
+    this.encryptedId = this.route.snapshot.paramMap.get('encryptedId');
+
+    if (!this.encryptedId) {
+      return;
+    }
+
+    this.productService.findProductById(this.encryptedId).subscribe({
+      next: (response) => {
+        this.productForm.patchValue(response);
+      },
+    });
+  }
 
   onSubmit(): void {
     const request = this.productForm.getRawValue() as ProductRequest;
 
-    this.productService.create(request).subscribe({
+    this.productService.edit(this.encryptedId, request).subscribe({
       next: (response: SuccessResponse) => {
         this.flashMessageService.success(response.message);
         this.router.navigate(['/admin/products']);

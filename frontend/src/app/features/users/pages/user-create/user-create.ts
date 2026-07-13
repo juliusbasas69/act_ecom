@@ -15,7 +15,6 @@ import { UserFormService } from '../../services/user-form.service';
   styleUrl: './user-create.css',
 })
 export class UserCreate {
-  private fb = inject(FormBuilder);
   private userService = inject(UserService);
   private router = inject(Router);
   private flashMessageService = inject(FlashMessageService);
