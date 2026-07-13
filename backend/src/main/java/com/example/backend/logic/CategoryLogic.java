@@ -12,7 +12,7 @@ public interface CategoryLogic {
     
     public void saveCategory(CategoryEntity category);
 
-    public Page<CategoryEntity> getAllCategories(int page, String search);
+    public Page<CategoryEntity> getAllCategories(int page, String search, boolean isRetrievingAll);
 
     public Optional<CategoryEntity> findCategoryById(int id);
 }

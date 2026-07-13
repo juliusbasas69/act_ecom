@@ -8,6 +8,9 @@ public class CommonConstant {
     public static final boolean IS_DELETED = true;
 	
 	public static final boolean IS_NOT_DELETED = false;
+
+    public static final boolean RETRIEVING_ALL = true;
+    public static final boolean NOT_RETRIEVING_ALL = false;
 	
     public static final int OK = 200;
     public static final int CREATED = 201;

@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import com.example.backend.common.util.CipherUtil;
 import com.example.backend.common.util.DateUtil;
 import com.example.backend.dao.entity.ProductEntity;
+import com.example.backend.dao.projection.ProductData;
 import com.example.backend.dto.request.ProductRequest;
 import com.example.backend.dto.response.PageResponse;
 import com.example.backend.dto.response.PaginationResponse;
@@ -28,7 +29,7 @@ public class ProductServiceImpl implements ProductService{
     @Override
     public PageResponse<ProductResponse> getAllProducts(int page, String search) throws Exception {
         
-        Page<ProductEntity> products = productLogic.getAllProducts(page, search);
+        Page<ProductData> products = productLogic.getAllProducts(page, search);
 
         return PageResponse.<ProductResponse>builder()
             .content(
@@ -37,16 +38,16 @@ public class ProductServiceImpl implements ProductService{
                     .map(product -> {
                         try{
                             return ProductResponse.builder()
-                                .encryptedId(CipherUtil.encrypt(String.valueOf(product.getId())))
-                                .productCode(product.getProductCode())
-                                .productName(product.getProductName())
-                                .description(product.getDescription())
-                                .category(product.getCategory())
-                                .price(product.getPrice())
-                                .quantity(product.getQuantity())
-                                .status(product.getStatus())
-                                .createdAt(product.getCreatedAt())
-                                .updatedAt(product.getUpdatedAt())
+                                .encryptedId(CipherUtil.encrypt(String.valueOf(product.id())))
+                                .productCode(product.productCode())
+                                .productName(product.productName())
+                                .description(product.description())
+                                .category(product.category())
+                                .price(product.price())
+                                .quantity(product.quantity())
+                                .status(product.status())
+                                .createdAt(product.createdAt())
+                                .updatedAt(product.updatedAt())
                                 .build();
 
                         }catch(Exception e){

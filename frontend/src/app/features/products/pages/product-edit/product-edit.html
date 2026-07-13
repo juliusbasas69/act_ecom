@@ -152,11 +152,12 @@
                 formControlName="category"
                 class="w-full rounded-xl border border-sky-200 bg-white px-4 py-3 text-sm outline-none transition focus:border-sky-500 focus:ring-2 focus:ring-sky-100"
               >
-                <option value="">Select Category</option>
-                <option value="ELECTRONICS">Electronics</option>
-                <option value="FOOD">Food</option>
-                <option value="CLOTHING">Clothing</option>
-                <option value="OFFICE">Office Supplies</option>
+                <option disabled value="">Select Category</option>
+                @for (category of _categories(); track category.encryptedId) {
+                  <option [value]="category.categoryCode">
+                    {{ category.categoryCode }} | {{ category.categoryName }}
+                  </option>
+                }
               </select>
 
               @if (productForm.get('category')?.errors?.['server']; as errors) {
@@ -176,9 +177,9 @@
                 formControlName="status"
                 class="w-full rounded-xl border border-sky-200 bg-white px-4 py-3 text-sm outline-none transition focus:border-sky-500 focus:ring-2 focus:ring-sky-100"
               >
-                <option value="">Select Status</option>
-                <option value="ACTIVE">Active</option>
-                <option value="INACTIVE">Inactive</option>
+                <option disabled value="">Select Status</option>
+                <option value="ACTIVE">🟢 ACTIVE</option>
+                <option value="INACTIVE">🔴 INACTIVE</option>
               </select>
 
               @if (productForm.get('status')?.errors?.['server']; as errors) {
@@ -195,7 +196,7 @@
           <div class="flex justify-end gap-3 border-t border-slate-100 pt-6">
             <button
               type="button"
-              routerLink="/admin/users"
+              routerLink="/admin/products"
               class="cursor-pointer rounded-xl border border-slate-200 bg-white px-5 py-2.5 text-sm font-medium text-slate-700 transition hover:bg-slate-50"
             >
               CANCEL

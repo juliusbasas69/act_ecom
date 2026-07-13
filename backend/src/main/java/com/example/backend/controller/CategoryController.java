@@ -1,6 +1,7 @@
 package com.example.backend.controller;
 
 import static com.example.backend.common.constants.MessageConstant.*;
+import static com.example.backend.common.constants.CommonConstant.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -38,7 +39,25 @@ public class CategoryController {
             
         try{
 
-            PageResponse<CategoryResponse> response = categoryService.getAllCategories(page, search);
+            PageResponse<CategoryResponse> response = categoryService.getAllCategories(page, search, NOT_RETRIEVING_ALL);
+
+            return ResponseEntity.ok(response);
+
+        }catch(Exception e){
+            e.printStackTrace();;
+
+            return ResponseEntity
+            .status(HttpStatus.INTERNAL_SERVER_ERROR)
+            .build();
+        }
+    }
+
+    @GetMapping("/all")
+    public ResponseEntity<PageResponse<CategoryResponse>> getAllProducts(){
+            
+        try{
+
+            PageResponse<CategoryResponse> response = categoryService.getAllCategories(0, "", RETRIEVING_ALL);
 
             return ResponseEntity.ok(response);
 

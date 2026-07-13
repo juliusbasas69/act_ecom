@@ -25,6 +25,15 @@ export class CategoryService {
     });
   }
 
+  getAllCategories(): Observable<PagedResponse<Category>> {
+    const token = StorageUtil.getToken();
+    const api = `${this.apiUrl}/all`;
+
+    return this.http.get<PagedResponse<Category>>(api, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+  }
+
   create(request: CategoryRequest): Observable<SuccessResponse> {
     console.log(request);
     const token = StorageUtil.getToken();

@@ -9,7 +9,7 @@ import com.example.backend.dto.response.PageResponse;
 @Service
 public interface CategoryService {
 
-    public PageResponse<CategoryResponse> getAllCategories(int page, String search);
+    public PageResponse<CategoryResponse> getAllCategories(int page, String search, boolean isRetrievingAll);
     
     public void createCategory(CategoryRequest request);
 

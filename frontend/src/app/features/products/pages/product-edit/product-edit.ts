@@ -7,6 +7,8 @@ import { ProductFormService } from '../../services/product-form.service';
 import { ProductRequest } from '../../models/product-request.mode';
 import { SuccessResponse } from '../../../../shared/models/success-response.model';
 import { ProductResponse } from '../../models/product-response.model';
+import { CategoryService } from '../../../categories/services/category.service';
+import { Category } from '../../../categories/models/category.model';
 
 @Component({
   selector: 'app-product-edit',
@@ -20,10 +22,12 @@ export class ProductEdit implements OnInit {
   private readonly route = inject(ActivatedRoute);
   private flashMessageService = inject(FlashMessageService);
   private productFormService = inject(ProductFormService);
+  private categoryService = inject(CategoryService);
 
   encryptedId: string | null = null;
   _product = signal<ProductResponse | null>(null);
   productForm = this.productFormService.createForm();
+  _categories = signal<Array<Category>>([]);
 
   ngOnInit(): void {
     this.encryptedId = this.route.snapshot.paramMap.get('encryptedId');
@@ -35,6 +39,17 @@ export class ProductEdit implements OnInit {
     this.productService.findProductById(this.encryptedId).subscribe({
       next: (response) => {
         this.productForm.patchValue(response);
+      },
+    });
+
+    this.categoryService.getAllCategories().subscribe({
+      next: (response) => {
+        const categories = response.content;
+        this._categories.set(categories);
+        console.log('Fetched categories:', categories);
+      },
+      error: (error) => {
+        console.error('Error fetching categories:', error);
       },
     });
   }

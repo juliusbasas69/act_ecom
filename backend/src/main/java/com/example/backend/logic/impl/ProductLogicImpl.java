@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.backend.dao.ProductDao;
 import com.example.backend.dao.entity.ProductEntity;
+import com.example.backend.dao.projection.ProductData;
 import com.example.backend.logic.ProductLogic;
 
 @Service
@@ -29,7 +30,7 @@ public class ProductLogicImpl implements ProductLogic {
     }
 
     @Override
-    public Page<ProductEntity> getAllProducts(int page, String search) {
+    public Page<ProductData> getAllProducts(int page, String search) {
 
         Pageable pageable = PageRequest.of(page, Integer.parseInt(PRODUCT_MAX_DISPLAY));
         

@@ -28,9 +28,9 @@ public class CategoryServiceImpl implements CategoryService {
     private CategoryLogic categoryLogic;
 
     @Override
-    public PageResponse<CategoryResponse> getAllCategories(int page, String search) {
+    public PageResponse<CategoryResponse> getAllCategories(int page, String search, boolean isRetrievingAll) {
         
-        Page<CategoryEntity> categories = categoryLogic.getAllCategories(page, search);
+        Page<CategoryEntity> categories = categoryLogic.getAllCategories(page, search, isRetrievingAll);
 
         return PageResponse.<CategoryResponse>builder()
             .content(

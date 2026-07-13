@@ -1,20 +1,10 @@
 package com.example.backend.controller;
 
-import static com.example.backend.common.constants.MessageConstant.PRODUCT_CREATED_MESSAGE;
-import static com.example.backend.common.constants.MessageConstant.PRODUCT_UPDATED_MESSAGE;
-import static com.example.backend.common.constants.MessageConstant.UNEXPECTED_ERROR_MESSAGE;
-import static com.example.backend.common.constants.MessageConstant.USER_DELETED_MESSAGE;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import static com.example.backend.common.constants.MessageConstant.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

@@ -29,10 +29,14 @@ public class CategoryLogicImpl implements CategoryLogic{
     }
 
     @Override
-    public Page<CategoryEntity> getAllCategories(int page, String search) {
-        
+    public Page<CategoryEntity> getAllCategories(int page, String search, boolean isRetrievingAll) {
+
         Pageable pageable = PageRequest.of(page, Integer.parseInt(CATEGORY_MAX_DISPLAY));
 
+        if(isRetrievingAll){
+            pageable = Pageable.unpaged();
+        }
+        
         return categoryDao.getAllCategories(pageable, search);
     }
 
