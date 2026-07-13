@@ -1,1 +1,204 @@
-<p>admin-dashboard works!</p>
+<div class="mx-auto max-w-7xl p-6">
+  <!-- Welcome -->
+  <div class="mb-8 rounded-3xl bg-gradient-to-r from-sky-500 to-sky-400 p-8 text-white shadow-lg">
+    <div class="flex items-center justify-between">
+      <div>
+        <h1 class="text-3xl font-bold">Welcome back, Admin 👋</h1>
+
+        <p class="mt-2 text-sky-100">Here's an overview of your e-commerce platform today.</p>
+      </div>
+
+      <div class="hidden h-28 w-28 items-center justify-center rounded-full bg-white/20 md:flex">
+        <i class="fa-solid fa-chart-line text-5xl"></i>
+      </div>
+    </div>
+  </div>
+
+  <!-- Statistics -->
+  <div class="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
+    <!-- Users -->
+    <div class="rounded-2xl border border-sky-100 bg-white p-6 shadow-sm">
+      <div class="flex items-center justify-between">
+        <div>
+          <p class="text-sm text-slate-500">Registered Users</p>
+          <h2 class="mt-2 text-3xl font-bold text-slate-800">1,284</h2>
+          <p class="mt-2 text-sm font-medium text-green-600">+32 this month</p>
+        </div>
+
+        <div
+          class="flex h-14 w-14 items-center justify-center rounded-full bg-sky-100 ring-2 ring-sky-200"
+        >
+          <i class="fa-solid fa-users text-2xl text-sky-600"></i>
+        </div>
+      </div>
+    </div>
+
+    <!-- Products -->
+    <div class="rounded-2xl border border-sky-100 bg-white p-6 shadow-sm">
+      <div class="flex items-center justify-between">
+        <div>
+          <p class="text-sm text-slate-500">Products</p>
+          <h2 class="mt-2 text-3xl font-bold text-slate-800">486</h2>
+          <p class="mt-2 text-sm font-medium text-sky-600">18 Categories</p>
+        </div>
+
+        <div
+          class="flex h-14 w-14 items-center justify-center rounded-full bg-sky-100 ring-2 ring-sky-200"
+        >
+          <i class="fa-solid fa-box-open text-2xl text-sky-600"></i>
+        </div>
+      </div>
+    </div>
+
+    <!-- Orders -->
+    <div class="rounded-2xl border border-sky-100 bg-white p-6 shadow-sm">
+      <div class="flex items-center justify-between">
+        <div>
+          <p class="text-sm text-slate-500">Orders</p>
+          <h2 class="mt-2 text-3xl font-bold text-slate-800">953</h2>
+          <p class="mt-2 text-sm font-medium text-amber-600">24 Pending</p>
+        </div>
+
+        <div
+          class="flex h-14 w-14 items-center justify-center rounded-full bg-sky-100 ring-2 ring-sky-200"
+        >
+          <i class="fa-solid fa-cart-shopping text-2xl text-sky-600"></i>
+        </div>
+      </div>
+    </div>
+
+    <!-- Revenue -->
+    <div class="rounded-2xl border border-sky-100 bg-white p-6 shadow-sm">
+      <div class="flex items-center justify-between">
+        <div>
+          <p class="text-sm text-slate-500">Revenue</p>
+          <h2 class="mt-2 text-3xl font-bold text-slate-800">₱458,720</h2>
+          <p class="mt-2 text-sm font-medium text-green-600">+12.4%</p>
+        </div>
+
+        <div
+          class="flex h-14 w-14 items-center justify-center rounded-full bg-sky-100 ring-2 ring-sky-200"
+        >
+          <i class="fa-solid fa-wallet text-2xl text-sky-600"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Quick Actions -->
+  <div class="mt-8 grid gap-6 lg:grid-cols-4">
+    <a
+      routerLink="/admin/users"
+      class="rounded-2xl border border-sky-100 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-lg"
+    >
+      <div
+        class="flex h-14 w-14 items-center justify-center rounded-full bg-sky-100 ring-2 ring-sky-200"
+      >
+        <i class="fa-solid fa-users text-2xl text-sky-600"></i>
+      </div>
+
+      <h3 class="mt-5 text-lg font-semibold text-slate-800">Manage Users</h3>
+
+      <p class="mt-2 text-sm text-slate-500">Create, edit and deactivate user accounts.</p>
+    </a>
+
+    <a
+      routerLink="/admin/products"
+      class="rounded-2xl border border-sky-100 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-lg"
+    >
+      <div
+        class="flex h-14 w-14 items-center justify-center rounded-full bg-sky-100 ring-2 ring-sky-200"
+      >
+        <i class="fa-solid fa-box-open text-2xl text-sky-600"></i>
+      </div>
+
+      <h3 class="mt-5 text-lg font-semibold text-slate-800">Products</h3>
+
+      <p class="mt-2 text-sm text-slate-500">Manage your product inventory.</p>
+    </a>
+
+    <a
+      routerLink="/admin/categories"
+      class="rounded-2xl border border-sky-100 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-lg"
+    >
+      <div
+        class="flex h-14 w-14 items-center justify-center rounded-full bg-sky-100 ring-2 ring-sky-200"
+      >
+        <i class="fa-solid fa-tags text-2xl text-sky-600"></i>
+      </div>
+
+      <h3 class="mt-5 text-lg font-semibold text-slate-800">Categories</h3>
+
+      <p class="mt-2 text-sm text-slate-500">Organize products into categories.</p>
+    </a>
+
+    <a
+      routerLink="/admin/orders"
+      class="rounded-2xl border border-sky-100 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-lg"
+    >
+      <div
+        class="flex h-14 w-14 items-center justify-center rounded-full bg-sky-100 ring-2 ring-sky-200"
+      >
+        <i class="fa-solid fa-receipt text-2xl text-sky-600"></i>
+      </div>
+
+      <h3 class="mt-5 text-lg font-semibold text-slate-800">Orders</h3>
+
+      <p class="mt-2 text-sm text-slate-500">Review customer orders and payments.</p>
+    </a>
+  </div>
+
+  <!-- Recent Activity -->
+  <div class="mt-8 rounded-2xl border border-sky-100 bg-white shadow-sm">
+    <div class="border-b border-slate-100 px-6 py-4">
+      <h2 class="text-lg font-semibold text-slate-800">Recent Activity</h2>
+    </div>
+
+    <div class="divide-y divide-slate-100">
+      <div class="flex items-center justify-between px-6 py-4">
+        <div class="flex items-center gap-4">
+          <div class="flex h-10 w-10 items-center justify-center rounded-full bg-green-100">
+            <i class="fa-solid fa-user-plus text-green-600"></i>
+          </div>
+
+          <div>
+            <p class="font-medium text-slate-800">New user registered</p>
+            <p class="text-sm text-slate-500">John Smith created an account.</p>
+          </div>
+        </div>
+
+        <span class="text-sm text-slate-400">5 mins ago</span>
+      </div>
+
+      <div class="flex items-center justify-between px-6 py-4">
+        <div class="flex items-center gap-4">
+          <div class="flex h-10 w-10 items-center justify-center rounded-full bg-sky-100">
+            <i class="fa-solid fa-box text-sky-600"></i>
+          </div>
+
+          <div>
+            <p class="font-medium text-slate-800">Product added</p>
+            <p class="text-sm text-slate-500">iPhone 16 Pro has been added.</p>
+          </div>
+        </div>
+
+        <span class="text-sm text-slate-400">18 mins ago</span>
+      </div>
+
+      <div class="flex items-center justify-between px-6 py-4">
+        <div class="flex items-center gap-4">
+          <div class="flex h-10 w-10 items-center justify-center rounded-full bg-amber-100">
+            <i class="fa-solid fa-cart-shopping text-amber-600"></i>
+          </div>
+
+          <div>
+            <p class="font-medium text-slate-800">New order received</p>
+            <p class="text-sm text-slate-500">Order #10234 has been placed.</p>
+          </div>
+        </div>
+
+        <span class="text-sm text-slate-400">32 mins ago</span>
+      </div>
+    </div>
+  </div>
+</div>
