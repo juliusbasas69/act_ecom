@@ -114,14 +114,15 @@
       <table class="min-w-[1300px] table-fixed">
         <thead class="bg-sky-50">
           <tr class="text-left text-sm font-semibold text-slate-700">
-            <th class="w-64 px-6 py-3">PRODUCT CODE</th>
-            <th class="w-72 px-6 py-3">PRODUCT NAME</th>
-            <th class="w-40 px-6 py-3">CATEGORY</th>
-            <th class="w-36 px-6 py-3">PRICE</th>
-            <th class="w-28 px-6 py-3">STOCK</th>
-            <th class="w-56 px-6 py-3">CREATED</th>
-            <th class="w-56 px-6 py-3">UPDATED</th>
-            <th class="w-40 px-6 py-3 text-center">ACTIONS</th>
+            <th class="w-72 px-6 py-3 whitespace-nowrap">PRODUCT CODE</th>
+            <th class="w-72 px-6 py-3 whitespace-nowrap">PRODUCT NAME</th>
+            <th class="w-40 px-6 py-3 whitespace-nowrap">CATEGORY</th>
+            <th class="w-36 px-6 py-3 whitespace-nowrap">PRICE</th>
+            <th class="w-28 px-6 py-3 whitespace-nowrap">STOCK</th>
+            <th class="w-28 px-6 py-3 whitespace-nowrap">STATUS</th>
+            <th class="w-56 px-6 py-3 whitespace-nowrap">CREATED</th>
+            <th class="w-56 px-6 py-3 whitespace-nowrap">UPDATED</th>
+            <th class="w-40 px-6 py-3 whitespace-nowrap text-center">ACTIONS</th>
           </tr>
         </thead>
 
@@ -203,6 +204,20 @@
                       {{ product.quantity }}
                     </span>
                   </span>
+                }
+              </td>
+
+              <td class="px-6 py-4 whitespace-nowrap">
+                @if (product.status === 'ACTIVE') {
+                  <div class="inline-flex items-center gap-2">
+                    <span class="h-2.5 w-2.5 rounded-full bg-emerald-500"></span>
+                    <span class="text-sm font-medium text-slate-700">ACTIVE</span>
+                  </div>
+                } @else {
+                  <div class="inline-flex items-center gap-2">
+                    <span class="h-2.5 w-2.5 rounded-full bg-red-500"></span>
+                    <span class="text-sm font-medium text-slate-700">INACTIVE</span>
+                  </div>
                 }
               </td>
 

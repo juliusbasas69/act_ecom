@@ -109,6 +109,7 @@ export const CATEGORY_ICONS: CategoryIcon[] = [
   { label: 'Truck', value: 'fa-truck' },
   { label: 'Gas Pump', value: 'fa-gas-pump' },
   { label: 'Wrench', value: 'fa-wrench' },
+  { label: 'Plug', value: 'fa-plug' },
 
   // Pets
   { label: 'Paw', value: 'fa-paw' },

@@ -106,19 +106,17 @@
               </div>
             </td>
 
-            <td class="px-6 py-4">
+            <td class="px-6 py-4 whitespace-nowrap">
               @if (user.role === 'ADMIN') {
-                <span
-                  class="inline-flex items-center rounded-full bg-sky-100 px-3 py-1 text-xs font-semibold text-sky-700"
-                >
-                  ADMIN
-                </span>
+                <div class="inline-flex items-center gap-2">
+                  <span class="h-2.5 w-2.5 rounded-full bg-sky-500"></span>
+                  <span class="text-sm font-medium text-slate-700">ADMIN</span>
+                </div>
               } @else {
-                <span
-                  class="inline-flex items-center rounded-full bg-green-100 px-3 py-1 text-xs font-semibold text-green-700"
-                >
-                  USER
-                </span>
+                <div class="inline-flex items-center gap-2">
+                  <span class="h-2.5 w-2.5 rounded-full bg-emerald-500"></span>
+                  <span class="text-sm font-medium text-slate-700">USER</span>
+                </div>
               }
             </td>
 

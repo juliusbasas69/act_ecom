@@ -7,6 +7,7 @@ export interface Product {
   color: string;
   price: number;
   quantity: number;
+  status: string;
   createdAt: string;
   updatedAt: string;
 }

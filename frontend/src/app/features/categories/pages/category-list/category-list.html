@@ -110,19 +110,17 @@
             </td>
 
             <!-- Status -->
-            <td class="px-6 py-4">
+            <td class="px-6 py-4 whitespace-nowrap">
               @if (category.status === 'ACTIVE') {
-                <span
-                  class="inline-flex items-center rounded-full bg-emerald-100 px-3 py-1 text-xs font-semibold text-emerald-700"
-                >
-                  ACTIVE
-                </span>
+                <div class="inline-flex items-center gap-2">
+                  <span class="h-2.5 w-2.5 rounded-full bg-emerald-500"></span>
+                  <span class="text-sm font-medium text-slate-700">ACTIVE</span>
+                </div>
               } @else {
-                <span
-                  class="inline-flex items-center rounded-full bg-red-100 px-3 py-1 text-xs font-semibold text-red-700"
-                >
-                  INACTIVE
-                </span>
+                <div class="inline-flex items-center gap-2">
+                  <span class="h-2.5 w-2.5 rounded-full bg-red-500"></span>
+                  <span class="text-sm font-medium text-slate-700">INACTIVE</span>
+                </div>
               }
             </td>
 
