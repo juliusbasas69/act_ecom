@@ -33,7 +33,7 @@
     </div>
 
     <div class="flex gap-4 overflow-x-auto pb-2">
-      @for (category of _categories(); track category.encryptedId) {
+      @for (category of categories$ | async; track category.encryptedId) {
         <button
           class="flex min-w-[130px] flex-col items-center rounded-2xl border border-sky-100 bg-white p-5 shadow-sm transition hover:border-sky-300 hover:bg-sky-50"
         >

@@ -30,11 +30,11 @@ public class ProductLogicImpl implements ProductLogic {
     }
 
     @Override
-    public Page<ProductData> getAllProducts(int page, String search) {
+    public Page<ProductData> getAllProducts(int page, String search, String category, String price, String stock) {
 
         Pageable pageable = PageRequest.of(page, Integer.parseInt(PRODUCT_MAX_DISPLAY));
         
-        return productDao.getAllProducts(pageable, search);
+        return productDao.getAllProducts(pageable, search, category, price, stock);
     }
 
     @Override

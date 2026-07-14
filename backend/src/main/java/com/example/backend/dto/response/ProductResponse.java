@@ -15,6 +15,7 @@ public record ProductResponse(
     String description,
     Boolean isActive,
     String category,
+    String color,
     String status,
     Timestamp createdAt,
     Timestamp updatedAt

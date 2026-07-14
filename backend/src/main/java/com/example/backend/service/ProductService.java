@@ -9,7 +9,7 @@ import com.example.backend.dto.response.ProductResponse;
 @Service
 public interface ProductService {
 
-    public PageResponse<ProductResponse> getAllProducts(int page, String search) throws Exception;
+    public PageResponse<ProductResponse> getAllProducts(int page, String search, String category, String price, String stock) throws Exception;
 
     public ProductResponse findProductById(String encryptedId) throws Exception;
     

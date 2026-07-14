@@ -27,9 +27,9 @@ public class ProductServiceImpl implements ProductService{
     private ProductLogic productLogic;
 
     @Override
-    public PageResponse<ProductResponse> getAllProducts(int page, String search) throws Exception {
+    public PageResponse<ProductResponse> getAllProducts(int page, String search, String category, String price, String stock) throws Exception {
         
-        Page<ProductData> products = productLogic.getAllProducts(page, search);
+        Page<ProductData> products = productLogic.getAllProducts(page, search, category, price, stock);
 
         return PageResponse.<ProductResponse>builder()
             .content(
@@ -43,6 +43,7 @@ public class ProductServiceImpl implements ProductService{
                                 .productName(product.productName())
                                 .description(product.description())
                                 .category(product.category())
+                                .color(product.color())
                                 .price(product.price())
                                 .quantity(product.quantity())
                                 .status(product.status())

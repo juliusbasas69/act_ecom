@@ -43,9 +43,9 @@
     </button>
   </div>
 
-  <!-- Search -->
-  <div class="mb-5">
-    <div class="relative max-w-md">
+  <div class="mb-5 flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+    <!-- Search -->
+    <div class="relative max-w-md flex-1">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         class="absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-slate-400"
@@ -68,6 +68,41 @@
         (input)="onSearch($event)"
         class="w-full rounded-xl border border-sky-200 bg-white py-2.5 pl-10 pr-4 text-sm outline-none transition focus:border-sky-500 focus:ring-2 focus:ring-sky-100"
       />
+    </div>
+
+    <!-- Filters -->
+    <div class="flex flex-wrap gap-3">
+      <select
+        (change)="onCategoryChange($event)"
+        class="rounded-xl border border-sky-200 bg-white px-4 py-2.5 text-sm outline-none transition focus:border-sky-500 focus:ring-2 focus:ring-sky-100"
+      >
+        <option value="">All Category</option>
+        @for (category of _categories(); track category.encryptedId) {
+          <option [value]="category.categoryCode">{{ category.categoryName }}</option>
+        }
+      </select>
+
+      <select
+        (change)="onPriceChange($event)"
+        class="rounded-xl border border-sky-200 bg-white px-4 py-2.5 text-sm outline-none transition focus:border-sky-500 focus:ring-2 focus:ring-sky-100"
+      >
+        <option value="">Price</option>
+        <option value="0-500">₱0 - ₱500</option>
+        <option value="500-1000">₱500 - ₱1,000</option>
+        <option value="1000-5000">₱1,000 - ₱5,000</option>
+        <option value="5000">₱5,000+</option>
+      </select>
+
+      <select
+        (change)="onStockChange($event)"
+        class="rounded-xl border border-sky-200 bg-white px-4 py-2.5 text-sm outline-none transition focus:border-sky-500 focus:ring-2 focus:ring-sky-100"
+      >
+        <option value="">All</option>
+        <option value="">📦 Stock</option>
+        <option value="IN_STOCK">🟢 In Stock</option>
+        <option value="LOW_STOCK">🟡 Low Stock</option>
+        <option value="OUT_OF_STOCK">🔴 Out of Stock</option>
+      </select>
     </div>
   </div>
 
@@ -112,10 +147,17 @@
               </td>
 
               <!-- Category -->
-              <td class="px-6 py-4 whitespace-nowrap">
-                <span class="rounded-full bg-sky-100 px-3 py-1 text-xs font-medium text-sky-700">
-                  {{ product.category }}
-                </span>
+              <td class="whitespace-nowrap px-6 py-4">
+                <div class="flex items-center gap-2">
+                  <span
+                    class="h-3 w-3 rounded-full border border-white shadow-sm"
+                    [style.background-color]="product.color"
+                  ></span>
+
+                  <span class="text-sm font-medium text-slate-700">
+                    {{ product.category }}
+                  </span>
+                </div>
               </td>
 
               <!-- Price -->
@@ -124,8 +166,44 @@
               </td>
 
               <!-- Stock -->
-              <td class="px-6 py-4 whitespace-nowrap">
-                {{ product.quantity }}
+              <td class="whitespace-nowrap px-6 py-4">
+                @if (product.quantity === 0) {
+                  <span
+                    class="inline-flex items-center gap-2 rounded-full bg-red-100 px-3 py-1.5 text-red-700"
+                  >
+                    <span class="h-2.5 w-2.5 rounded-full bg-red-500"></span>
+
+                    <span class="text-xs">Out of Stock</span>
+
+                    <span class="text-sm font-bold leading-none">
+                      {{ product.quantity }}
+                    </span>
+                  </span>
+                } @else if (product.quantity <= 10) {
+                  <span
+                    class="inline-flex items-center gap-2 rounded-full bg-amber-100 px-3 py-1.5 text-amber-700"
+                  >
+                    <span class="h-2.5 w-2.5 rounded-full bg-amber-500"></span>
+
+                    <span class="text-xs">Low Stock</span>
+
+                    <span class="text-sm font-bold leading-none">
+                      {{ product.quantity }}
+                    </span>
+                  </span>
+                } @else {
+                  <span
+                    class="inline-flex items-center gap-2 rounded-full bg-emerald-100 px-3 py-1.5 text-emerald-700"
+                  >
+                    <span class="h-2.5 w-2.5 rounded-full bg-emerald-500"></span>
+
+                    <span class="text-xs">In Stock</span>
+
+                    <span class="text-sm font-bold leading-none">
+                      {{ product.quantity }}
+                    </span>
+                  </span>
+                }
               </td>
 
               <!-- Created -->

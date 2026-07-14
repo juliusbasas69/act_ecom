@@ -16,12 +16,28 @@ export class ProductService {
   private http = inject(HttpClient);
   private readonly apiUrl = `${environment.apiUrl}/products`;
 
-  getProducts(page: number, search: string): Observable<PagedResponse<Product>> {
+  getProducts(
+    page: number,
+    search: string,
+    category: string,
+    price: string,
+    stock: string,
+  ): Observable<PagedResponse<Product>> {
     const token = StorageUtil.getToken();
+
+    console.log(category);
+    console.log(price);
+    console.log(stock);
 
     return this.http.get<PagedResponse<Product>>(this.apiUrl, {
       headers: { Authorization: `Bearer ${token}` },
-      params: { page: page.toString(), search: search },
+      params: {
+        page: page.toString(),
+        search: search,
+        category: category,
+        price: price,
+        stock: stock,
+      },
     });
   }
 

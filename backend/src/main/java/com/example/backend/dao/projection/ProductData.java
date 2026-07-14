@@ -19,6 +19,8 @@ public record ProductData(
 
     String category,
 
+    String color,
+
     String status,
 
     Timestamp createdAt,

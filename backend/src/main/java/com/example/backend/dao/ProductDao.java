@@ -21,6 +21,7 @@ public interface ProductDao extends JpaRepository<ProductEntity, Integer> {
 				p.quantity,
 				p.description,
 				c.categoryName,
+				c.color,
 				p.status,
 				p.createdAt,
 				p.updatedAt,
@@ -31,16 +32,55 @@ public interface ProductDao extends JpaRepository<ProductEntity, Integer> {
 				ON p.category = c.categoryCode
 			WHERE p.isDeleted = false
 			AND (
-				(:search IS NOT NULL AND :search <> '' AND (
-					LOWER(p.productCode) LIKE LOWER(CONCAT('%', :search, '%')) OR
-					LOWER(p.productName) LIKE LOWER(CONCAT('%', :search, '%')) OR
-					LOWER(c.categoryName) LIKE LOWER(CONCAT('%', :search, '%'))
-				))
-				OR (:search IS NULL OR :search = '')
+				(:search IS NULL OR :search = '')
+				OR (
+					LOWER(p.productCode) LIKE LOWER(CONCAT('%', :search, '%'))
+					OR LOWER(p.productName) LIKE LOWER(CONCAT('%', :search, '%'))
+					OR LOWER(c.categoryName) LIKE LOWER(CONCAT('%', :search, '%'))
+				)
 			)
-			""";
+			AND (
+				:category IS NULL
+				OR :category = ''
+				OR p.category = :category
+			)
+			AND (
+				:price IS NULL
+				OR :price = ''
+
+				OR (:price = '0-500'
+					AND p.price BETWEEN 0 AND 500)
+
+				OR (:price = '500-1000'
+					AND p.price BETWEEN 500 AND 1000)
+
+				OR (:price = '1000-5000'
+					AND p.price BETWEEN 1000 AND 5000)
+
+				OR (:price = '5000'
+					AND p.price >= 5000)
+			)
+			AND (
+				:stock IS NULL
+				OR :stock = ''
+
+				OR (:stock = 'IN_STOCK'
+					AND p.quantity > 10)
+
+				OR (:stock = 'LOW_STOCK'
+					AND p.quantity BETWEEN 1 AND 10)
+
+				OR (:stock = 'OUT_OF_STOCK'
+					AND p.quantity = 0)
+			)
+    """;
 	
 	
 	@Query(GET_ALL_PRODUCTS)
-	public Page<ProductData> getAllProducts(Pageable pageable, @Param("search") String search) throws DataAccessException;
+	public Page<ProductData> getAllProducts(
+		Pageable pageable, 
+		@Param("search") String search, 
+		@Param("category") String category, 
+		@Param("price") String price, 
+		@Param("stock") String stock) throws DataAccessException;
 }

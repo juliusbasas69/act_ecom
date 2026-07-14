@@ -33,10 +33,14 @@ public class ProductController {
     @GetMapping
     public ResponseEntity<PageResponse<ProductResponse>> getAllProducts(
         @RequestParam(defaultValue = "0") int page,
-        @RequestParam(defaultValue = "") String search) {
+        @RequestParam(defaultValue = "") String search,
+        @RequestParam(defaultValue = "") String category,
+        @RequestParam(defaultValue = "") String price,
+        @RequestParam(defaultValue = "") String stock
+    ) {
         try{
 
-            PageResponse<ProductResponse> response = productService.getAllProducts(page, search);
+            PageResponse<ProductResponse> response = productService.getAllProducts(page, search, category, price, stock);
 
             return ResponseEntity.ok(response);
 
