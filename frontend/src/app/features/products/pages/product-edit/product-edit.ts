@@ -9,6 +9,7 @@ import { SuccessResponse } from '../../../../shared/models/success-response.mode
 import { ProductResponse } from '../../models/product-response.model';
 import { CategoryService } from '../../../categories/services/category.service';
 import { Category } from '../../../categories/models/category.model';
+import { FileService } from '../../../../shared/services/file.service';
 
 @Component({
   selector: 'app-product-edit',
@@ -23,11 +24,14 @@ export class ProductEdit implements OnInit {
   private flashMessageService = inject(FlashMessageService);
   private productFormService = inject(ProductFormService);
   private categoryService = inject(CategoryService);
+  private fileService = inject(FileService);
 
   encryptedId: string | null = null;
   _product = signal<ProductResponse | null>(null);
   productForm = this.productFormService.createForm();
   _categories = signal<Array<Category>>([]);
+  readonly imagePreview = signal<string | null>(null);
+  selectedFile: File | null = null;
 
   ngOnInit(): void {
     this.encryptedId = this.route.snapshot.paramMap.get('encryptedId');
@@ -38,6 +42,7 @@ export class ProductEdit implements OnInit {
 
     this.productService.findProductById(this.encryptedId).subscribe({
       next: (response) => {
+        console.log(response);
         this.productForm.patchValue(response);
       },
     });
@@ -52,12 +57,27 @@ export class ProductEdit implements OnInit {
         console.error('Error fetching categories:', error);
       },
     });
+
+    this.productService.findProductById(this.encryptedId).subscribe({
+      next: (response) => {
+        this.productForm.patchValue(response);
+
+        if (response.imageName) {
+          this.fileService.getProductImage(response.imageName).subscribe({
+            next: (blob) => {
+              this.imagePreview.set(URL.createObjectURL(blob));
+            },
+          });
+        }
+      },
+    });
   }
 
   onSubmit(): void {
     const request = this.productForm.getRawValue() as ProductRequest;
+    const image = this.selectedFile;
 
-    this.productService.edit(this.encryptedId, request).subscribe({
+    this.productService.edit(this.encryptedId, request, image).subscribe({
       next: (response: SuccessResponse) => {
         this.flashMessageService.success(response.message);
         this.router.navigate(['/admin/products']);
@@ -76,5 +96,23 @@ export class ProductEdit implements OnInit {
         });
       },
     });
+  }
+
+  onImageSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+
+    if (!input.files?.length) {
+      return;
+    }
+
+    this.selectedFile = input.files[0];
+
+    const reader = new FileReader();
+
+    reader.onload = () => {
+      this.imagePreview.set(reader.result as string);
+    };
+
+    reader.readAsDataURL(this.selectedFile);
   }
 }

@@ -8,6 +8,7 @@ export interface Product {
   price: number;
   quantity: number;
   status: string;
+  imageName: string;
   createdAt: string;
   updatedAt: string;
 }

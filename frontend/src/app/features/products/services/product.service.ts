@@ -25,10 +25,6 @@ export class ProductService {
   ): Observable<PagedResponse<Product>> {
     const token = StorageUtil.getToken();
 
-    console.log(category);
-    console.log(price);
-    console.log(stock);
-
     return this.http.get<PagedResponse<Product>>(this.apiUrl, {
       headers: { Authorization: `Bearer ${token}` },
       params: {
@@ -41,11 +37,24 @@ export class ProductService {
     });
   }
 
-  create(request: ProductRequest): Observable<SuccessResponse> {
+  create(request: ProductRequest, image: File | null): Observable<SuccessResponse> {
     const token = StorageUtil.getToken();
     const api = `${this.apiUrl}/create`;
 
-    return this.http.post<SuccessResponse>(api, request, {
+    const formData = new FormData();
+
+    formData.append(
+      'product',
+      new Blob([JSON.stringify(request)], {
+        type: 'application/json',
+      }),
+    );
+
+    if (image) {
+      formData.append('image', image);
+    }
+
+    return this.http.post<SuccessResponse>(api, formData, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -61,11 +70,28 @@ export class ProductService {
     });
   }
 
-  edit(encryptedId: string | null, request: ProductRequest): Observable<SuccessResponse> {
+  edit(
+    encryptedId: string | null,
+    request: ProductRequest,
+    image: File | null,
+  ): Observable<SuccessResponse> {
     const token = StorageUtil.getToken();
     const api = `${this.apiUrl}/edit/${encryptedId}`;
 
-    return this.http.post<SuccessResponse>(api, request, {
+    const formData = new FormData();
+
+    formData.append(
+      'product',
+      new Blob([JSON.stringify(request)], {
+        type: 'application/json',
+      }),
+    );
+
+    if (image) {
+      formData.append('image', image);
+    }
+
+    return this.http.post<SuccessResponse>(api, formData, {
       headers: {
         Authorization: `Bearer ${token}`,
       },

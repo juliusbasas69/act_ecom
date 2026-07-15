@@ -6,6 +6,7 @@ export interface ProductResponse {
   category: string;
   price: number;
   quantity: number;
+  imageName: string;
   createdAt: string;
   updatedAt: string;
 }

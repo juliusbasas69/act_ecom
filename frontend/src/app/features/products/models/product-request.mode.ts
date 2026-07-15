@@ -6,4 +6,5 @@ export interface ProductRequest {
   price: number;
   quantity: number;
   status: string;
+  image: File | null;
 }

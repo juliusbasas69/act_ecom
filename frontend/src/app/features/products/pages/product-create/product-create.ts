@@ -25,6 +25,8 @@ export class ProductCreate implements OnInit {
   productForm = this.productFormService.createForm();
 
   _categories = signal<Array<Category>>([]);
+  readonly imagePreview = signal<string | null>(null);
+  selectedFile: File | null = null;
 
   ngOnInit(): void {
     this.categoryService.getAllCategories().subscribe({
@@ -41,8 +43,9 @@ export class ProductCreate implements OnInit {
 
   onSubmit(): void {
     const request = this.productForm.getRawValue() as ProductRequest;
+    const image = this.selectedFile;
 
-    this.productService.create(request).subscribe({
+    this.productService.create(request, image).subscribe({
       next: (response: SuccessResponse) => {
         this.flashMessageService.success(response.message);
         this.router.navigate(['/admin/products']);
@@ -61,5 +64,23 @@ export class ProductCreate implements OnInit {
         });
       },
     });
+  }
+
+  onImageSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+
+    if (!input.files?.length) {
+      return;
+    }
+
+    this.selectedFile = input.files[0];
+
+    const reader = new FileReader();
+
+    reader.onload = () => {
+      this.imagePreview.set(reader.result as string);
+    };
+
+    reader.readAsDataURL(this.selectedFile);
   }
 }
