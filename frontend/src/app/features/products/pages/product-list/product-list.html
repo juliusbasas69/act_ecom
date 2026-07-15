@@ -128,10 +128,21 @@
 
         <tbody class="divide-y divide-slate-100">
           @for (product of _products(); track product.encryptedId) {
-            <tr class="hover:bg-sky-50 transition">
+            <tr
+              class="transition hover:bg-sky-50"
+              [class.bg-yellow-50]="product.isFeatured"
+              [class.border-l-4]="product.isFeatured"
+              [class.border-yellow-400]="product.isFeatured"
+            >
               <!-- Product Code -->
               <td class="px-6 py-4 whitespace-nowrap">
-                {{ product.productCode }}
+                <div class="flex items-center gap-2">
+                  {{ product.productCode }}
+
+                  @if (product.isFeatured) {
+                    <span class="text-yellow-500" title="Featured Product"> ⭐ </span>
+                  }
+                </div>
               </td>
 
               <!-- Product Name -->

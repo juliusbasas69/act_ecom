@@ -1,5 +1,6 @@
 export interface Product {
   encryptedId: string;
+  isFeatured: boolean;
   productCode: string;
   productName: string;
   description: string;

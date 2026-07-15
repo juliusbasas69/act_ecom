@@ -8,6 +8,7 @@ import lombok.Builder;
 @Builder
 public record ProductResponse(
     String encryptedId,
+    Boolean isFeatured,
     String productCode,
     String productName,
     BigDecimal price,
@@ -17,6 +18,7 @@ public record ProductResponse(
     String category,
     String color,
     String status,
+    String imageName,
     Timestamp createdAt,
     Timestamp updatedAt
 ) {

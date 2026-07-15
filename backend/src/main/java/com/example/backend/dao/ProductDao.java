@@ -23,6 +23,7 @@ public interface ProductDao extends JpaRepository<ProductEntity, Integer> {
 				c.categoryName,
 				c.color,
 				p.status,
+				p.isFeatured,
 				p.createdAt,
 				p.updatedAt,
 				p.isDeleted

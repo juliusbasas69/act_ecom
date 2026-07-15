@@ -53,7 +53,6 @@ export class ProductList implements OnInit, OnDestroy {
       next: (response) => {
         const content = response.content;
         this._categories.set(content);
-        console.log(this._categories());
       },
       error: (err) => {
         console.error(err);
@@ -80,6 +79,7 @@ export class ProductList implements OnInit, OnDestroy {
   ): void {
     this.productService.getProducts(page, search, category, price, stock).subscribe({
       next: (response) => {
+        console.log(response);
         this._products.set(response.content);
         this._pagination.set(response.pagination);
       },

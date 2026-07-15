@@ -9,6 +9,7 @@ export class ProductFormService {
 
   createForm() {
     return this.fb.group({
+      isFeatured: [false],
       productCode: [''],
       productName: [''],
       description: [''],

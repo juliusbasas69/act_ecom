@@ -3,11 +3,14 @@ package com.example.backend.service.impl;
 import static com.example.backend.common.constants.CommonConstant.*;
 import static com.example.backend.common.constants.MessageConstant.*;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.example.backend.common.util.CipherUtil;
 import com.example.backend.common.util.DateUtil;
@@ -18,6 +21,7 @@ import com.example.backend.dto.response.PageResponse;
 import com.example.backend.dto.response.PaginationResponse;
 import com.example.backend.dto.response.ProductResponse;
 import com.example.backend.logic.ProductLogic;
+import com.example.backend.service.FileService;
 import com.example.backend.service.ProductService;
 
 @Service
@@ -25,6 +29,9 @@ public class ProductServiceImpl implements ProductService{
 
     @Autowired
     private ProductLogic productLogic;
+
+    @Autowired
+    private FileService fileService;
 
     @Override
     public PageResponse<ProductResponse> getAllProducts(int page, String search, String category, String price, String stock) throws Exception {
@@ -47,6 +54,7 @@ public class ProductServiceImpl implements ProductService{
                                 .price(product.price())
                                 .quantity(product.quantity())
                                 .status(product.status())
+                                .isFeatured(product.isFeatured())
                                 .createdAt(product.createdAt())
                                 .updatedAt(product.updatedAt())
                                 .build();
@@ -70,7 +78,9 @@ public class ProductServiceImpl implements ProductService{
     
 
     @Override
-    public void createProduct(ProductRequest request) {
+    public void createProduct(ProductRequest request, 
+        MultipartFile image
+    ) {
         
         ProductEntity newProduct = ProductEntity.builder()
             .productCode(request.productCode())
@@ -80,12 +90,28 @@ public class ProductServiceImpl implements ProductService{
             .quantity(request.quantity())
             .category(request.category())
             .status(request.status())
+            .isFeatured(request.isFeatured())
             .createdAt(DateUtil.now())
             .updatedAt(DateUtil.now())
             .isDeleted(IS_NOT_DELETED)
             .build();
 
-        productLogic.saveProduct(newProduct);
+        if (image != null && !image.isEmpty()) {
+
+            String extension = image.getOriginalFilename()
+                .substring(image.getOriginalFilename().lastIndexOf("."));
+
+            String timestamp = LocalDateTime.now()
+                .format(DateTimeFormatter.ofPattern(FILE_TIME_FORMAT));
+
+            String fileName = newProduct.getProductCode() + "_" + timestamp + extension;
+
+            fileService.saveProductImage(image, fileName);
+
+            newProduct.setImage(fileName);
+
+            productLogic.saveProduct(newProduct);
+        }
     }
 
     @Override
@@ -108,11 +134,13 @@ public class ProductServiceImpl implements ProductService{
                 .quantity(productEntity.getQuantity())
                 .category(productEntity.getCategory())
                 .status(productEntity.getStatus())
+                .isFeatured(productEntity.getIsFeatured())
+                .imageName(productEntity.getImage())
                 .build();
     }
 
     @Override
-    public void editProduct(String encryptedId, ProductRequest request) throws Exception {
+    public void editProduct(String encryptedId, ProductRequest request, MultipartFile image) throws Exception {
         
         int id = Integer.parseInt(CipherUtil.decrypt(encryptedId));
 
@@ -129,7 +157,25 @@ public class ProductServiceImpl implements ProductService{
         productEntity.setQuantity(request.quantity());
         productEntity.setCategory(request.category());
         productEntity.setStatus(request.status());
+        productEntity.setIsFeatured(request.isFeatured());
         productEntity.setUpdatedAt(DateUtil.now());
+
+        if (image != null && !image.isEmpty()) {
+
+            fileService.deleteProductImage(productEntity.getImage());
+
+            String extension = image.getOriginalFilename()
+                .substring(image.getOriginalFilename().lastIndexOf("."));
+
+            String timestamp = LocalDateTime.now()
+                .format(DateTimeFormatter.ofPattern(FILE_TIME_FORMAT));
+
+            String fileName = productEntity.getProductCode() + "_" + timestamp + extension;
+
+            fileService.saveProductImage(image, fileName);
+
+            productEntity.setImage(fileName);
+        }
 
         productLogic.saveProduct(productEntity);
     }

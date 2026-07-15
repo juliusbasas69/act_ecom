@@ -1,6 +1,7 @@
 package com.example.backend.service;
 
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.example.backend.dto.request.ProductRequest;
 import com.example.backend.dto.response.PageResponse;
@@ -13,9 +14,9 @@ public interface ProductService {
 
     public ProductResponse findProductById(String encryptedId) throws Exception;
     
-    public void createProduct(ProductRequest request);
+    public void createProduct(ProductRequest request, MultipartFile image);
 
-    public void editProduct(String encryptedId, ProductRequest request) throws Exception;
+    public void editProduct(String encryptedId, ProductRequest request, MultipartFile image) throws Exception;
 
     public void deleteProduct(String encryptedId) throws Exception;
 }

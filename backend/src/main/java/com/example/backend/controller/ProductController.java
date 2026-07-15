@@ -4,6 +4,7 @@ import static com.example.backend.common.constants.MessageConstant.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,7 +13,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.example.backend.common.validations.CreateValidation;
 import com.example.backend.common.validations.EditValidation;
@@ -53,13 +56,17 @@ public class ProductController {
         }
     }
     
-    @PostMapping("/create")
+    @PostMapping(
+        value = "/create",
+        consumes = MediaType.MULTIPART_FORM_DATA_VALUE
+    )
     public ResponseEntity<?> createProduct(
-        @Validated(CreateValidation.class) @RequestBody ProductRequest request){
+        @Validated(CreateValidation.class) @RequestPart("product") ProductRequest request,
+        @RequestPart(value = "image", required = false) MultipartFile image){
 
         try{
 
-            productService.createProduct(request);
+            productService.createProduct(request, image);
 
             return ResponseEntity
                 .status(HttpStatus.CREATED)
@@ -96,11 +103,13 @@ public class ProductController {
     @PostMapping("/edit/{encryptedId}")
     public ResponseEntity<?> editProduct(
         @PathVariable("encryptedId") String encryptedId,
-        @Validated(EditValidation.class) @RequestBody ProductRequest request){
+        @Validated(EditValidation.class) @RequestPart("product") ProductRequest request,
+        @RequestPart(value = "image", required = false) MultipartFile image
+    ){
 
         try{
 
-            productService.editProduct(encryptedId, request);
+            productService.editProduct(encryptedId, request, image);
 
             return ResponseEntity
                 .status(HttpStatus.OK)

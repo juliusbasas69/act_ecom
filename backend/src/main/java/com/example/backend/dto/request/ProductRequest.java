@@ -15,6 +15,9 @@ import jakarta.validation.constraints.Size;
 
 public record ProductRequest(
 
+
+    Boolean isFeatured,
+
     @NotBlank(
         message = PRODUCT_CODE_REQUIRED,
         groups={CreateValidation.class, EditValidation.class})

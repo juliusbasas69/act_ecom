@@ -58,6 +58,17 @@ public class ProductEntity {
     private String status;
 
     @Column(
+        name = "image",
+        nullable = false)
+    private String image;
+
+    @Column(
+        name = "is_featured",
+        nullable = false)
+    private Boolean isFeatured;
+
+
+    @Column(
         name = "created_at", 
         nullable = false, 
         updatable = false)

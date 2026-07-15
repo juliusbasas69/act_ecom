@@ -1,4 +1,5 @@
 export interface ProductRequest {
+  isFeatured: boolean;
   productCode: string;
   productName: string;
   description: string;

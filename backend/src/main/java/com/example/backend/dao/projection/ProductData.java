@@ -23,6 +23,8 @@ public record ProductData(
 
     String status,
 
+    Boolean isFeatured,
+
     Timestamp createdAt,
 
     Timestamp updatedAt,
