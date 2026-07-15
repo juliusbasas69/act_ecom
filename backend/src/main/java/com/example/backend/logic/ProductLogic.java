@@ -1,5 +1,6 @@
 package com.example.backend.logic;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.domain.Page;
@@ -16,4 +17,6 @@ public interface ProductLogic {
     public Page<ProductData> getAllProducts(int page, String search, String category, String price, String stock);
 
     public Optional<ProductEntity> findProductById(int id);
+
+    public List<ProductData> getFeaturedProducts();
 }

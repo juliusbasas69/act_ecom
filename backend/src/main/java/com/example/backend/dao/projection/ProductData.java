@@ -25,6 +25,8 @@ public record ProductData(
 
     Boolean isFeatured,
 
+    String image,
+
     Timestamp createdAt,
 
     Timestamp updatedAt,

@@ -3,6 +3,8 @@ import { CategoryService } from '../../../../categories/services/category.servic
 import { Category } from '../../../../categories/models/category.model';
 import { CommonModule } from '@angular/common';
 import { map, Observable, of, Subscription } from 'rxjs';
+import { ProductService } from '../../../services/product.service';
+import { Product } from '../../../models/product.model';
 
 @Component({
   selector: 'app-product-list',
@@ -35,13 +37,27 @@ export class ProductList {
   //   }
   // }
   private categoryService = inject(CategoryService);
+  private productService = inject(ProductService);
 
   categories$: Observable<Category[]> = of([]);
+  products$: Observable<Array<Product>> = of([]);
 
   constructor() {
     this.categories$ = this.categoryService.getAllCategories().pipe(
       // Map the PagedResponse<Category> to Category[]
       map((response) => response.content),
     );
+
+    this.products$ = this.productService.getFeaturedProducts().pipe(map((product) => product));
+    console.log(this.products$);
+    // this.products$.subscribe({
+    //   next: (products) => {
+    //     console.log('OKAY');
+    //     console.log(products);
+    //   },
+    //   error: (error) => {
+    //     console.error(error);
+    //   },
+    // });
   }
 }

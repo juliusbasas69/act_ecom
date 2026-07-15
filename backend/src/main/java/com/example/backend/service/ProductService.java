@@ -1,5 +1,7 @@
 package com.example.backend.service;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -19,4 +21,7 @@ public interface ProductService {
     public void editProduct(String encryptedId, ProductRequest request, MultipartFile image) throws Exception;
 
     public void deleteProduct(String encryptedId) throws Exception;
+
+    public List<ProductResponse> getFeaturedProducts();
+
 }

@@ -5,6 +5,7 @@ import static com.example.backend.common.constants.MessageConstant.*;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -197,6 +198,32 @@ public class ProductServiceImpl implements ProductService{
         productEntity.setUpdatedAt(DateUtil.now());
 
         productLogic.saveProduct(productEntity);
+    }
+
+
+    @Override
+    public List<ProductResponse> getFeaturedProducts() {
+        
+        List<ProductData> products = productLogic.getFeaturedProducts();
+
+        return products.stream()
+            .map(product -> {
+                try{
+                    return ProductResponse.builder()
+                        .encryptedId(CipherUtil.encrypt(String.valueOf(product.id())))
+                        .productCode(product.productCode())
+                        .productName(product.productName())
+                        .price(product.price())
+                        .quantity(product.quantity())
+                        .category(product.category())
+                        .color(product.color())
+                        .imageName(product.image())
+                    .build();
+                }catch(Exception e){
+                    return null;
+                }
+            })
+            .toList();
     }
 
 

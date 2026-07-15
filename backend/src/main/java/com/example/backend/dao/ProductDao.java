@@ -1,5 +1,7 @@
 package com.example.backend.dao;
 
+import java.util.List;
+
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -24,6 +26,7 @@ public interface ProductDao extends JpaRepository<ProductEntity, Integer> {
 				c.color,
 				p.status,
 				p.isFeatured,
+				p.image,
 				p.createdAt,
 				p.updatedAt,
 				p.isDeleted
@@ -84,4 +87,30 @@ public interface ProductDao extends JpaRepository<ProductEntity, Integer> {
 		@Param("category") String category, 
 		@Param("price") String price, 
 		@Param("stock") String stock) throws DataAccessException;
+
+	public static final String GET_FEATURED_PRODUCTS = """
+		SELECT new com.example.backend.dao.projection.ProductData(
+			p.id,
+			p.productCode,
+			p.productName,
+			p.price,
+			p.quantity,
+			p.description,
+			c.categoryName,
+			c.color,
+			p.status,
+			p.isFeatured,
+			p.image,
+			p.createdAt,
+			p.updatedAt,
+			p.isDeleted
+		)
+		FROM ProductEntity p
+		LEFT JOIN CategoryEntity c ON p.category = c.categoryCode
+		WHERE p.isDeleted = false
+		AND p.isFeatured = true
+	""";
+
+	@Query(GET_FEATURED_PRODUCTS)
+	public List<ProductData> getFeaturedProducts() throws DataAccessException;
 }

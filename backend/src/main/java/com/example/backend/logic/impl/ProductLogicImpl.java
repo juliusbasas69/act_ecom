@@ -1,5 +1,6 @@
 package com.example.backend.logic.impl;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,6 +42,12 @@ public class ProductLogicImpl implements ProductLogic {
     public Optional<ProductEntity> findProductById(int id) {
         
         return productDao.findById(id);
+    }
+
+    @Override
+    public List<ProductData> getFeaturedProducts() {
+        
+        return productDao.getFeaturedProducts();
     }
 
   

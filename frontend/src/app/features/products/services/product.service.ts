@@ -110,4 +110,13 @@ export class ProductService {
       },
     );
   }
+
+  getFeaturedProducts(): Observable<Array<Product>> {
+    const token = StorageUtil.getToken();
+    const api = `${this.apiUrl}/features`;
+
+    return this.http.get<Array<Product>>(api, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+  }
 }
