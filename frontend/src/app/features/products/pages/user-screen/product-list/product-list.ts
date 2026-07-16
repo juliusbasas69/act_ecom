@@ -1,4 +1,4 @@
-import { Component, inject, OnDestroy, OnInit, signal } from '@angular/core';
+import { Component, ElementRef, inject, OnDestroy, OnInit, signal, ViewChild } from '@angular/core';
 import { CategoryService } from '../../../../categories/services/category.service';
 import { Category } from '../../../../categories/models/category.model';
 import { CommonModule } from '@angular/common';
@@ -59,5 +59,39 @@ export class ProductList {
     //     console.error(error);
     //   },
     // });
+  }
+
+  @ViewChild('categoryContainer')
+  categoryContainer!: ElementRef<HTMLDivElement>;
+
+  scrollLeft() {
+    this.categoryContainer.nativeElement.scrollBy({
+      left: -300,
+      behavior: 'smooth',
+    });
+  }
+
+  scrollRight() {
+    this.categoryContainer.nativeElement.scrollBy({
+      left: 300,
+      behavior: 'smooth',
+    });
+  }
+
+  @ViewChild('productContainer')
+  productContainer!: ElementRef<HTMLDivElement>;
+
+  scrollProductsLeft() {
+    this.productContainer.nativeElement.scrollBy({
+      left: -900, // scroll about 3 cards
+      behavior: 'smooth',
+    });
+  }
+
+  scrollProductsRight() {
+    this.productContainer.nativeElement.scrollBy({
+      left: 900, // scroll about 3 cards
+      behavior: 'smooth',
+    });
   }
 }
